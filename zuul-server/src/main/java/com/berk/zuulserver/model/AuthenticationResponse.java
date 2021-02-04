@@ -1,4 +1,4 @@
-package com.berk.zuulserver.models;
+package com.berk.zuulserver.model;
 
 public class AuthenticationResponse {
 

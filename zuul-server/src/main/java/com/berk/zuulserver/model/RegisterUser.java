@@ -1,14 +1,10 @@
-package com.berk.zuulserver.models;
+package com.berk.zuulserver.model;
 
-public class AuthenticationRequest {
-
+public class RegisterUser {
     private String username;
     private String password;
 
-    public AuthenticationRequest() {
-    }
-
-    public AuthenticationRequest(String username, String password) {
+    public RegisterUser(String username, String password) {
         this.username = username;
         this.password = password;
     }
