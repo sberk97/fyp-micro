@@ -1,5 +1,6 @@
 package com.berk.zuulserver;
 
+import com.berk.zuulserver.util.AccessFilter;
 import com.berk.zuulserver.util.JwtAuthenticationEntryPoint;
 import com.berk.zuulserver.util.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationFilter();
     }
 
+    @Bean
+    public AccessFilter preFilter() {
+        return new AccessFilter();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
@@ -59,16 +65,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
+        http
+                .httpBasic().disable()
+                .csrf().disable()
+                .cors().and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                .antMatchers("/api/register", "/api/authenticate", "/advert-service/api/getAll").permitAll()
-                .antMatchers("/advert-service/api/addAdver").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/api/register", "/api/authenticate", "/advert-service/api/findByTitle").permitAll()
+                .antMatchers("/advert-service/api/addAdvert").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/advert-service/api/getAll").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
 
         http.addFilterBefore(authenticationTokenFilterBean(),
                 UsernamePasswordAuthenticationFilter.class);

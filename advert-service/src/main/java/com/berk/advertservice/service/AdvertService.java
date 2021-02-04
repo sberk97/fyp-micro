@@ -3,6 +3,8 @@ package com.berk.advertservice.service;
 import com.berk.advertservice.model.AddAdvert;
 import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.model.AdvertRepository;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,5 +31,15 @@ public class AdvertService {
 
     public List<Advert> getAll() {
         return advertRepository.findAll();
+    }
+
+    public List<Advert> findAllByTitle(String title) {
+        ExampleMatcher caseInsensitiveExampleMatcher = ExampleMatcher.matchingAny().withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+        Advert advert = new Advert();
+        advert.setTitle(title);
+        Example<Advert> example = Example.of(advert, caseInsensitiveExampleMatcher);
+
+        return advertRepository.findAll(example);
     }
 }

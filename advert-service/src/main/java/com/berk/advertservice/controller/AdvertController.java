@@ -3,27 +3,41 @@ package com.berk.advertservice.controller;
 import com.berk.advertservice.model.AddAdvert;
 import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.service.AdvertService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class AdvertController {
 
     @Resource(name = "advertService")
-    private AdvertService advertServiceService;
+    private AdvertService advertService;
 
     @PostMapping(value = "/addAdvert")
     public ResponseEntity<?> addAdvert(@RequestBody AddAdvert advert) {
-        advertServiceService.addAdvert(advert);
+        advertService.addAdvert(advert);
         return ResponseEntity.ok("Advert has been added");
     }
 
     @GetMapping(value = "/getAll")
     public List<Advert> getAll() {
-        return advertServiceService.getAll();
+        return advertService.getAll();
+    }
+
+    @GetMapping(value = "/findByTitle")
+    public List<Advert> findByTitle(@RequestParam String title) {
+        List<Advert> adverts = advertService.findAllByTitle(title);
+
+        if(adverts.isEmpty()) {
+            //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Adverts not found.")
+        }
+
+        return adverts;
     }
 }
