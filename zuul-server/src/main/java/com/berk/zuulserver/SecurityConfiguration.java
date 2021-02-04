@@ -61,8 +61,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/register", "/api/authenticate", "/advertisment-service/api/getAll").permitAll()
-                .antMatchers("advertisment-service/api/addAdvertisment").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
+                .antMatchers("/api/register", "/api/authenticate", "/advert-service/api/getAll").permitAll()
+                .antMatchers("/advert-service/api/addAdver").hasAnyRole("ROLE_USER", "ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)

@@ -1,0 +1,7 @@
+
+Y
+java:S3655"7Call "Optional#isPresent()" before accessing the value.(ó¿ƒöùÿÿÿÿ8ÌÈôÔö.
+°
+java:S1130"’Remove the declaration of thrown exception 'org.springframework.security.core.userdetails.UsernameNotFoundException' which is a runtime exception.(ÌÃŸ8İ™ÖĞö.
+Q
+java:S2201"/The return value of "orElseThrow" must be used.(¸¸ìôøÿÿÿÿ8ÌÈôÔö.
