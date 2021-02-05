@@ -3,6 +3,7 @@ package com.berk.advertservice.controller;
 import com.berk.advertservice.model.AddAdvert;
 import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.service.AdvertService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,5 +38,16 @@ public class AdvertController {
                                     @Size(min = 6, max = 60, message = "Title must be between 6 and 60 characters")
                                             String title) {
         return advertService.findAllByTitle(title);
+    }
+
+    @DeleteMapping(value = "/deleteAdvert/{id}")
+    public ResponseEntity<?> removeAdvert(@PathVariable int id) {
+        boolean isRemoved = advertService.delete(id);
+
+        if (!isRemoved) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Advert not found.");
+        }
+
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }

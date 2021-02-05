@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AdvertService {
@@ -48,5 +49,19 @@ public class AdvertService {
         Example<Advert> example = Example.of(advert, caseInsensitiveExampleMatcher);
 
         return advertRepository.findAll(example);
+    }
+
+    public boolean delete(int id) {
+        Optional<Advert> advert = advertRepository.findById(id);
+
+        if (advert.isPresent()) {
+            ReturnUserDetails user = userDetailsService.getCurrentUser();
+            if (user.getId() == advert.get().getUserId()) {
+                advertRepository.deleteById(id);
+                return true;
+            }
+        }
+
+        return false;
     }
 }
