@@ -3,19 +3,18 @@ package com.berk.advertservice.controller;
 import com.berk.advertservice.model.AddAdvert;
 import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.service.AdvertService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import java.util.HashMap;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.List;
-import java.util.Map;
 
 @RestController
+@Validated
 public class AdvertController {
 
     @Resource(name = "advertService")
@@ -33,20 +32,10 @@ public class AdvertController {
     }
 
     @GetMapping(value = "/findByTitle")
-    public List<Advert> findByTitle(@RequestParam String title) {
+    public List<Advert> findByTitle(@RequestParam
+                                    @NotBlank(message = "Title should not be empty.")
+                                    @Size(min = 6, max = 60, message = "Title must be between 6 and 60 characters")
+                                            String title) {
         return advertService.findAllByTitle(title);
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Map<String, String> handleValidationExceptions(
-            MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach((error) -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return errors;
     }
 }
