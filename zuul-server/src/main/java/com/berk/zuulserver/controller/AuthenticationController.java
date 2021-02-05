@@ -1,10 +1,10 @@
 package com.berk.zuulserver.controller;
 
-import com.berk.zuulserver.service.MyUserDetailsService;
 import com.berk.zuulserver.model.AuthenticationRequest;
 import com.berk.zuulserver.model.AuthenticationResponse;
+import com.berk.zuulserver.model.ReturnUserDetails;
+import com.berk.zuulserver.service.MyUserDetailsService;
 import com.berk.zuulserver.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,10 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -24,16 +21,19 @@ import javax.annotation.Resource;
 @RequestMapping("/api")
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtil jwtTokenUtil;
+    private final JwtUtil jwtTokenUtil;
 
     @Resource(name = "userService")
     private MyUserDetailsService userService;
 
-    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    public AuthenticationController(AuthenticationManager authenticationManager, JwtUtil jwtTokenUtil) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
+    }
+
+    @PostMapping(value = "/authenticate")
     public ResponseEntity<?> generateToken(@RequestBody AuthenticationRequest loginUser)
             throws AuthenticationException {
         try {
@@ -50,5 +50,15 @@ public class AuthenticationController {
         } catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password.");
         }
+    }
+
+    @GetMapping(value = "/getUser")
+    public ReturnUserDetails fetchUserDetails() {
+        ReturnUserDetails userReturnData = new ReturnUserDetails();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        userReturnData.setUsername(auth.getName());
+        int id = userService.getIdByUsername(auth.getName());
+        userReturnData.setId(id);
+        return userReturnData;
     }
 }
