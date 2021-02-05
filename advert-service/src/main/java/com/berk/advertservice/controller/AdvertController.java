@@ -41,8 +41,8 @@ public class AdvertController {
     }
 
     @DeleteMapping(value = "/deleteAdvert/{id}")
-    public ResponseEntity<?> removeAdvert(@PathVariable int id) {
-        boolean isRemoved = advertService.delete(id);
+    public ResponseEntity<?> deleteAdvert(@PathVariable int id) {
+        boolean isRemoved = advertService.deleteAdvert(id);
 
         if (!isRemoved) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Advert not found.");

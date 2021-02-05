@@ -51,7 +51,7 @@ public class AdvertService {
         return advertRepository.findAll(example);
     }
 
-    public boolean delete(int id) {
+    public boolean deleteAdvert(int id) {
         Optional<Advert> advert = advertRepository.findById(id);
 
         if (advert.isPresent()) {

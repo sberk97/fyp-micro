@@ -51,14 +51,4 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password.");
         }
     }
-
-    @GetMapping(value = "/getUser")
-    public ReturnUserDetails fetchUserDetails() {
-        ReturnUserDetails userReturnData = new ReturnUserDetails();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userReturnData.setUsername(auth.getName());
-        int id = userService.getIdByUsername(auth.getName());
-        userReturnData.setId(id);
-        return userReturnData;
-    }
 }

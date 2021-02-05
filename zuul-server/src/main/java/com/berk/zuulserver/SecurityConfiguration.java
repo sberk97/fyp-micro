@@ -73,8 +73,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/register", "/api/authenticate", "/advert-service/api/findByTitle").permitAll()
-                .antMatchers("/advert-service/api/addAdvert").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/advert-service/api/getAll").hasAnyRole("ADMIN")
+                .antMatchers("/advert-service/api/addAdvert", "/advert-service/api/deleteAdvert/{id}").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/deleteUser/{id}", "/advert-service/api/getAll").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
