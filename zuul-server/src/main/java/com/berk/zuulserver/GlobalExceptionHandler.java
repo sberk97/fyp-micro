@@ -1,5 +1,6 @@
 package com.berk.zuulserver;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
@@ -42,5 +43,14 @@ public class GlobalExceptionHandler {
             errors.put(fieldName, errorMessage);
         });
         return errors;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    @ExceptionHandler(EmptyResultDataAccessException.class)
+    public String handleEmptyResultDataExceptions(
+            EmptyResultDataAccessException ex) {
+        String message = ex.getMessage();
+        return message.substring(message.lastIndexOf('.') + 1);
     }
 }

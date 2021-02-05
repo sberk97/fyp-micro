@@ -55,4 +55,8 @@ public class MyUserDetailsService implements UserDetailsService {
 
         return user.get().getId();
     }
+
+    public void deleteUser(int id) {
+        userRepository.deleteById(id);
+    }
 }
