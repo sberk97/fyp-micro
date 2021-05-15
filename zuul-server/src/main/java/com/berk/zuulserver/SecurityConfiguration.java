@@ -72,9 +72,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/register", "/api/authenticate", "/advert-service/api/findByTitle").permitAll()
-                .antMatchers("/advert-service/api/addAdvert", "/advert-service/api/deleteAdvert/{id}").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/deleteUser/{id}", "/advert-service/api/getAll").hasAnyRole("ADMIN")
+                .antMatchers("/api/register", "/api/authenticate", "/api/advert-service/findByTitle").permitAll()
+                .antMatchers("/api/advert-service/addAdvert", "/api/advert-service/deleteAdvert/{id}").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/api/deleteUser/{id}", "/api/advert-service/getAll").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler);

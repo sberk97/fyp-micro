@@ -1,7 +1,11 @@
 
+U
+java:S36558"3Call "user.isPresent()" before accessing the value.(šÄŒ¶üÿÿÿÿ8ÑŸ’ç–/
 Y
-java:S3655"7Call "Optional#isPresent()" before accessing the value.(ó¿ƒöùÿÿÿÿ8ÌÈôÔö.
-°
-java:S1130"’Remove the declaration of thrown exception 'org.springframework.security.core.userdetails.UsernameNotFoundException' which is a runtime exception.(ÌÃŸ8İ™ÖĞö.
+java:S3655!"7Call "Optional#isPresent()" before accessing the value.(ó¿ƒöùÿÿÿÿ8ÌÈôÔö.
 Q
-java:S2201"/The return value of "orElseThrow" must be used.(¸¸ìôøÿÿÿÿ8ÌÈôÔö.
+java:S2201"/The return value of "orElseThrow" must be used.(¸¸ìôøÿÿÿÿ8ÌÈôÔö.
+Q
+java:S6212+"/Declare this local variable with "var" instead.(ÁÕ÷¸ùÿÿÿÿ8æŸ’ç–/
+Q
+java:S22016"/The return value of "orElseThrow" must be used.(¸¸ìôøÿÿÿÿ8éŸ’ç–/

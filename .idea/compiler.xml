@@ -8,7 +8,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="zuul-server" />
         <module name="advert-service" />
-        <module name="fyp-micro" />
         <module name="eureka-server" />
       </profile>
     </annotationProcessing>

@@ -1,0 +1,68 @@
+version: '3.8'
+services:
+  eureka-server:
+    image: eureka-server
+    container_name: eureka-server
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
+    ports:
+      - 8761:8761
+#  config:
+#    image: berk.com-config:0.0.1-SNAPSHOT
+#    volumes:
+#      - ./config-data:/var/config-data
+#    environment:
+#      - JAVA_OPTS=
+#        -DEUREKA_SERVER=http://discovery:8761/eureka
+#        -Dspring.cloud.config.server.native.searchLocations=/var/config-data
+#    depends_on:
+#      - discovery
+#    ports:
+#      - 8888:8888
+  zuul-server:
+    image: zuul-server
+    container_name: zuul-server
+    build:
+      context: ./zuul-server
+      dockerfile: Dockerfile
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=eureka-server
+        -DMYSQL_SERVER=db
+    restart: on-failure
+    depends_on:
+      - eureka-server
+      - db
+    #      - config
+    ports:
+      - 9092:9092
+  advert-service:
+    image: advert-service
+    container_name: advert-service
+    build:
+      context: ./advert-service
+      dockerfile: Dockerfile
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=eureka-server
+        -DMYSQL_SERVER=db
+        -DZUUL_SERVER=zuul-server
+    restart: on-failure
+    depends_on:
+      - eureka-server
+      - zuul-server
+      - db
+#      - config
+    ports:
+      - 9093
+  db:
+    image: 'mysql:latest'
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+    restart: on-failure
+    ports:
+      - 3306
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/:ro
