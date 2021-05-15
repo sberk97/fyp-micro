@@ -55,7 +55,7 @@ services:
       - db
 #      - config
     ports:
-      - 9093:9093
+      - 9093
   db:
     image: 'mysql:latest'
     container_name: db
@@ -63,6 +63,6 @@ services:
       MYSQL_ROOT_PASSWORD: pass
     restart: on-failure
     ports:
-      - 3306:3306
+      - 3306
     volumes:
       - ./db:/docker-entrypoint-initdb.d/:ro
