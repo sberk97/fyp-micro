@@ -1,11 +1,11 @@
 version: '3.8'
 services:
   eureka-server:
-    image: berk.com-eureka-server:0.0.1-SNAPSHOT
+    image: eureka-server
     container_name: eureka-server
-#    build:
-#      context: ./eureka-server
-#      dockerfile: Dockerfile
+    build:
+      context: ./eureka-server
+      dockerfile: Dockerfile
     ports:
       - 8761:8761
 #  config:
@@ -21,11 +21,11 @@ services:
 #    ports:
 #      - 8888:8888
   zuul-server:
-    image: berk.com-zuul-server:0.0.1-SNAPSHOT
+    image: zuul-server
     container_name: zuul-server
-#    build:
-#      context: ./zuul-server
-#      dockerfile: Dockerfile
+    build:
+      context: ./zuul-server
+      dockerfile: Dockerfile
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER=eureka-server
@@ -38,11 +38,11 @@ services:
     ports:
       - 9092:9092
   advert-service:
-    image: berk.com-advert-service:0.0.1-SNAPSHOT
+    image: advert-service
     container_name: advert-service
-#    build:
-#      context: ./advert-service
-#      dockerfile: Dockerfile
+    build:
+      context: ./advert-service
+      dockerfile: Dockerfile
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER=eureka-server

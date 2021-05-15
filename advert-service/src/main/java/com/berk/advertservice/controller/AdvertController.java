@@ -53,6 +53,6 @@ public class AdvertController {
 
     @GetMapping(value = "/hasupdated")
     public String getUpdate() {
-        return "version 1";
+        return "version 2";
     }
 }
