@@ -50,9 +50,9 @@ public class AdvertService {
         advertRepository.save(newAdvert);
     }
 
-    public List<Advert> getAll() {
-        return advertRepository.findAll();
-    }
+//    public List<Advert> getAll() {
+//        return advertRepository.findAll();
+//    }
 
     public Optional<List<Advert>> findAllByTitle(String title) {
         var caseInsensitiveExampleMatcher = ExampleMatcher.matchingAny().withIgnoreCase()

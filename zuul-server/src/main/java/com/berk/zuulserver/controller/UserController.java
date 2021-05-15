@@ -2,6 +2,7 @@ package com.berk.zuulserver.controller;
 
 import com.berk.zuulserver.model.RegisterUser;
 import com.berk.zuulserver.model.ReturnUserDetails;
+import com.berk.zuulserver.model.User;
 import com.berk.zuulserver.service.MyUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -29,7 +31,7 @@ public class UserController {
         return ResponseEntity.ok("User created successfully.");
     }
 
-    @GetMapping(value = "/getUser")
+    @GetMapping(value = "/users")
     public ReturnUserDetails fetchUserDetails() {
         ReturnUserDetails userReturnData = new ReturnUserDetails();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -39,7 +41,12 @@ public class UserController {
         return userReturnData;
     }
 
-    @DeleteMapping(value = "/deleteUser/{id}")
+    @GetMapping(value = "/users/all")
+    public List<User> getUsers() {
+        return userService.getUsers();
+    }
+
+    @DeleteMapping(value = "/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
