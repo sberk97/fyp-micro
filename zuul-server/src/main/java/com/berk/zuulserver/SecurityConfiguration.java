@@ -6,6 +6,7 @@ import com.berk.zuulserver.util.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -72,9 +73,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/register", "/api/authenticate", "/api/advert-service/findByTitle").permitAll()
-                .antMatchers("/api/advert-service/addAdvert", "/api/advert-service/deleteAdvert/{id}").hasAnyRole("ADMIN", "USER")
-                .antMatchers("/api/deleteUser/{id}", "/api/advert-service/getAll").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/advert-service/adverts", "/api/advert-service/adverts/{id}", "/api/advert-service/adverts/users/{id}").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/register", "/api/authenticate").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/advert-service/adverts").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.DELETE, "/api/advert-service/adverts/{id}").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.DELETE,"/api/deleteUser/{id}").hasAnyRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler);
