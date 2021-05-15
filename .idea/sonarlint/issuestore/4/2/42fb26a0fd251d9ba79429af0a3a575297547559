@@ -1,7 +1,7 @@
 
+j
+java:S1128"HRemove this unused import 'com.berk.zuulserver.model.ReturnUserDetails'.(Ùü‹ˆÿÿÿÿÿ8§â’ç–/
 B
 java:S1452%"&Remove usage of generic wildcard type.(§İØs8¤ÄÙÊö.
-l
-java:S4488$"JReplace "@RequestMapping(method = RequestMethod.POST)" with "@PostMapping"(¶€»²ùÿÿÿÿ8í´ŞÊö.
-¢
-java:S1130&"„Remove the declaration of thrown exception 'org.springframework.security.core.AuthenticationException' which is a runtime exception.(ïÁ8íáÊö.
+Q
+java:S6212("/Declare this local variable with "var" instead.(ğ§®Œøÿÿÿÿ8µâ’ç–/
