@@ -1,3 +1,4 @@
+# Fat JAR
 #FROM openjdk:11-jdk-slim
 #VOLUME /tmp
 #ADD target/*.jar app.jar
@@ -20,4 +21,4 @@ COPY --from=builder application/snapshot-dependencies/ ./
 COPY --from=builder application/application/ ./
 ENV JAVA_OPTS=""
 ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS org.springframework.boot.loader.JarLauncher" ]
-#ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS", "org.springframework.boot.loader.JarLauncher"]
+#ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
