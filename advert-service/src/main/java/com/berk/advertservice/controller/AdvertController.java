@@ -69,9 +69,4 @@ public class AdvertController {
 
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
-
-    @GetMapping(value = "/hasupdated")
-    public String getUpdate() {
-        return "version 3";
-    }
 }
