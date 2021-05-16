@@ -69,7 +69,7 @@ public class AdvertService {
 
         if (advert.isPresent()) {
             ReturnUserDetails user = userDetailsService.getCurrentUser();
-            if (user.getId() == advert.get().getUserId()) {
+            if (user.getRoles().equals("ROLE_ADMIN") || user.getId() == advert.get().getUserId()) {
                 advertRepository.deleteById(id);
                 return true;
             }
