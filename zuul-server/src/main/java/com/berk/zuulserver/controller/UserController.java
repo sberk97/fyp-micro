@@ -31,7 +31,7 @@ public class UserController {
         return ResponseEntity.ok("User created successfully.");
     }
 
-    @GetMapping(value = "/users")
+    @GetMapping(value = "/user")
     public ReturnUserDetails fetchUserDetails() {
         ReturnUserDetails userReturnData = new ReturnUserDetails();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -41,9 +41,13 @@ public class UserController {
         return userReturnData;
     }
 
-    @GetMapping(value = "/users/all")
-    public List<User> getUsers() {
-        return userService.getUsers();
+    @GetMapping(value = {"/users","/users/{id}"})
+    public ResponseEntity<List<User>> getUser(@PathVariable(required = false) Integer id) {
+        if (id != null) {
+            return ResponseEntity.of(userService.getUserById(id));
+        } else {
+            return ResponseEntity.of(userService.getUsers());
+        }
     }
 
     @DeleteMapping(value = "/users/{id}")

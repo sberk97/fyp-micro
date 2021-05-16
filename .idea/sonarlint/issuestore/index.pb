@@ -7,8 +7,6 @@
 Oadvert-service/src/main/java/com/berk/advertservice/GlobalExceptionHandler.java,1\2\123214106411bae994604ff7d529e53943f65efb
 ~
 Nzuul-server/src/main/java/com/berk/zuulserver/model/AuthenticationRequest.java,e\3\e33a8be5c1ad49d6bd4624ceb64487471cf857dc
-Å
-Qadvert-service/src/main/java/com/berk/advertservice/AdvertServiceApplication.java,9\e\9e0e9d530220bf98b0ca2b8796954ad09b4992ce
 r
 Beureka-server/src/main/java/com/berk/eureka/EurekaApplication.java,1\8\181e0ffbf652c6c848309f2ea4fbce3b977b2a15
 Ä
