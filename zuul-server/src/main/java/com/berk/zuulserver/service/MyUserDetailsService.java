@@ -4,7 +4,6 @@ import com.berk.zuulserver.model.MyUserDetails;
 import com.berk.zuulserver.model.RegisterUser;
 import com.berk.zuulserver.model.User;
 import com.berk.zuulserver.model.UserRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -42,7 +41,7 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     public void saveUser(RegisterUser user) {
-        User newUser = new User();
+        var newUser = new User();
         newUser.setUsername(user.getUsername());
         newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         newUser.setRoles("ROLE_USER");
@@ -50,12 +49,8 @@ public class MyUserDetailsService implements UserDetailsService {
         userRepository.save(newUser);
     }
 
-    public int getIdByUsername(String username) {
-        Optional<User> user = userRepository.findByUsername(username);
-
-        user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
-
-        return user.get().getId();
+    public Optional<User> getUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 
     public Optional<List<User>> getUserById(int id) {

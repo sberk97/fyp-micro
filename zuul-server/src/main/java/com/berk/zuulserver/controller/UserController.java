@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -32,13 +33,18 @@ public class UserController {
     }
 
     @GetMapping(value = "/user")
-    public ReturnUserDetails fetchUserDetails() {
-        ReturnUserDetails userReturnData = new ReturnUserDetails();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userReturnData.setUsername(auth.getName());
-        int id = userService.getIdByUsername(auth.getName());
-        userReturnData.setId(id);
-        return userReturnData;
+    public ResponseEntity<ReturnUserDetails> getLoggedInUserDetails() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        Optional<User> user = userService.getUserByUsername(auth.getName());
+        if (user.isPresent()) {
+            var userReturnData = new ReturnUserDetails();
+            userReturnData.setUsername(user.get().getUsername());
+            userReturnData.setId(user.get().getId());
+            userReturnData.setRoles(user.get().getRoles());
+
+            return ResponseEntity.of(Optional.of(userReturnData));
+        }
+        return ResponseEntity.of(Optional.empty());
     }
 
     @GetMapping(value = {"/users","/users/{id}"})
