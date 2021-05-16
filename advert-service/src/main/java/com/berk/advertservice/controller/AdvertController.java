@@ -3,6 +3,10 @@ package com.berk.advertservice.controller;
 import com.berk.advertservice.model.AddAdvert;
 import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.service.AdvertService;
+import net.kaczmarzyk.spring.data.jpa.domain.Equal;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
+import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,26 +25,41 @@ public class AdvertController {
     @Resource(name = "advertService")
     private AdvertService advertService;
 
-    @PostMapping(value = "/addAdvert")
+    @GetMapping(value = "/adverts/{id}")
+    public ResponseEntity<Advert> getAdvertById(@PathVariable int id) {
+        return ResponseEntity.of(advertService.getAdvertById(id));
+    }
+
+    @GetMapping(value = "/adverts/users/{id}")
+    public ResponseEntity<List<Advert>> getAdvertsByUserId(@PathVariable int id) {
+        return ResponseEntity.of(advertService.getAdvertsByUserId(id));
+    }
+
+    @GetMapping(value = "/adverts")
+    public ResponseEntity<List<Advert>> findAdvertsByTitle(@RequestParam
+                                           @Size(max = 60, message = "Title can be up to 60 characters")
+                                                   String title) {
+        return ResponseEntity.of(advertService.findAllByTitle(title));
+    }
+
+    @PostMapping(value = "/adverts")
     public ResponseEntity<?> addAdvert(@Valid @RequestBody AddAdvert advert) {
         advertService.addAdvert(advert);
         return ResponseEntity.ok("Advert has been added");
     }
 
-    @GetMapping(value = "/getAll")
-    public List<Advert> getAll() {
-        return advertService.getAll();
-    }
+//    @GetMapping(value = "/adverts")
+//    public ResponseEntity<List<Advert>> getAdverts(
+//            @And({
+//                    @Spec(path = "firstName", spec = Equal.class),
+//                    @Spec(path = "lastName", spec = Equal.class),
+//                    @Spec(path = "status", spec = Equal.class)
+//            }) Specification<Advert> advertSpec) {
+//
+//        return ResponseEntity.of(advertService.getAdverts(advertSpec));
+//    }
 
-    @GetMapping(value = "/findByTitle")
-    public List<Advert> findByTitle(@RequestParam
-                                    @NotBlank(message = "Title should not be empty.")
-                                    @Size(min = 6, max = 60, message = "Title must be between 6 and 60 characters")
-                                            String title) {
-        return advertService.findAllByTitle(title);
-    }
-
-    @DeleteMapping(value = "/deleteAdvert/{id}")
+    @DeleteMapping(value = "/adverts/{id}")
     public ResponseEntity<?> deleteAdvert(@PathVariable int id) {
         boolean isRemoved = advertService.deleteAdvert(id);
 
@@ -49,10 +68,5 @@ public class AdvertController {
         }
 
         return new ResponseEntity<>(id, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/hasupdated")
-    public String getUpdate() {
-        return "version 2";
     }
 }
