@@ -53,11 +53,6 @@ export class LoginComponent implements OnInit {
         );
         this.cookieService.set('jwt', response.jwt, 1, '/');
         void this.router.navigate(['/']);
-
-        console.log(this.jwtTokenService.getUser());
-        console.log(this.jwtTokenService.getRoles());
-        console.log(this.jwtTokenService.getExpiryTime());
-        console.log(this.jwtTokenService.isTokenExpired());
       },
       (error: HttpErrorResponse) => {
         this.loginFailed = true;
