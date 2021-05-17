@@ -2,6 +2,7 @@ package com.berk.zuulserver.controller;
 
 import com.berk.zuulserver.model.AuthenticationRequest;
 import com.berk.zuulserver.model.AuthenticationResponse;
+import com.berk.zuulserver.model.MyUserDetails;
 import com.berk.zuulserver.model.ReturnUserDetails;
 import com.berk.zuulserver.service.MyUserDetailsService;
 import com.berk.zuulserver.util.JwtUtil;
@@ -44,7 +45,7 @@ public class AuthenticationController {
                     )
             );
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            final UserDetails user = userService.loadUserByUsername(loginUser.getUsername());
+            final MyUserDetails user = userService.loadUserByUsername(loginUser.getUsername());
             final String token = jwtTokenUtil.generateToken(user);
             return ResponseEntity.ok(new AuthenticationResponse(token));
         } catch (AuthenticationException e) {
