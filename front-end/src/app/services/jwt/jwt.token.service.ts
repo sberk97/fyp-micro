@@ -14,6 +14,10 @@ export class JWTTokenService {
     }
   }
 
+  public removeToken(): void {
+    this.jwtToken = '';
+  }
+
   public decodeToken(): void {
     if (this.jwtToken) {
       this.decodedToken = jwt_decode(this.jwtToken);

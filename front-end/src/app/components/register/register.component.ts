@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { BackendService } from 'src/app/services/backend.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
 
 @Component({
   selector: 'app-register',

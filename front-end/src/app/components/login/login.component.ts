@@ -2,8 +2,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { BackendService } from 'src/app/services/backend.service';
-import { JWTTokenService } from 'src/app/utils/jwt.token.service';
+import { BackendService } from 'src/app/services/backend/backend.service';
+import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
 
 @Component({
   selector: 'app-login',
@@ -35,10 +35,23 @@ export class LoginComponent implements OnInit {
     this.backendService.authenticate(this.username, this.password).subscribe(
       (response) => {
         console.log(response);
-        // this.cookieService.set('username', response.user, 365, '/');
+        this.jwtTokenService.setToken(response.jwt);
+
+        this.cookieService.set(
+          'username',
+          this.jwtTokenService.getUser(),
+          1,
+          '/'
+        );
+        this.cookieService.set(
+          'roles',
+          this.jwtTokenService.getRoles(),
+          1,
+          '/'
+        );
         this.cookieService.set('jwt', response.jwt, 1, '/');
         void this.router.navigate(['/']);
-        this.jwtTokenService.setToken(response.jwt);
+
         console.log(this.jwtTokenService.getUser());
         console.log(this.jwtTokenService.getRoles());
         console.log(this.jwtTokenService.getExpiryTime());
