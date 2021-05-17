@@ -1,5 +1,6 @@
 package com.berk.zuulserver.util;
 
+import com.berk.zuulserver.model.MyUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -39,8 +40,9 @@ public class JwtUtil {
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(MyUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities());
         return createToken(claims, userDetails.getUsername());
     }
 
