@@ -1,0 +1,20 @@
+<h2 class="text-center text-white py-3">Enter your login details</h2>
+<div class="card my-5">
+    <div class="card-body">
+        <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+            <div class="form-group">
+                <input type="text" [(ngModel)]="username" class="form-control" id="username" name="username"
+                    placeholder="username" required #query="ngModel" required pattern="\w{6,32}">
+                <br>
+                <input type="password" [(ngModel)]="password" class="form-control" id="pwInput" name="password"
+                    placeholder="password" required #query="ngModel">
+                <div *ngIf="loginFailed==true" class="form-control mt-4 text-danger">{{failedMsg}}</div>
+            </div>
+            <button type="submit" [disabled]="!userForm.form.valid" id="loginButton" class="btn btn-info">Log
+                in</button>
+            <span class="or">or</span>
+            <button type="button" class="btn btn-info" id="createAccountButton" [routerLink]="['/signup']">Create an
+                account</button>
+        </form>
+    </div>
+</div>
