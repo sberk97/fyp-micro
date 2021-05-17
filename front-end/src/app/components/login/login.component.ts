@@ -26,7 +26,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     // navigate to the root if we already have a token set (are logged in)
-    if (this.cookieService.check('jwt')) {
+    if (
+      this.cookieService.check('jwt') &&
+      !this.jwtTokenService.isTokenExpired()
+    ) {
       void this.router.navigate(['/']);
     }
   }
@@ -34,7 +37,6 @@ export class LoginComponent implements OnInit {
   onSubmit(): void {
     this.backendService.authenticate(this.username, this.password).subscribe(
       (response) => {
-        console.log(response);
         this.jwtTokenService.setToken(response.jwt);
 
         this.cookieService.set(
