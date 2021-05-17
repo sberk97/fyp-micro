@@ -18,15 +18,15 @@ export class AppComponent {
     public cookieService: CookieService
   ) {
     // listen to every routing event and redirect the route to login if the user is not logged in (or trying to sign up)
-    this.router.events.subscribe((event) => {
-      if (
-        event instanceof NavigationEnd &&
-        !this.loggedIn() &&
-        event.url !== '/register'
-      ) {
-        void this.router.navigate(['/login']);
-      }
-    });
+    // this.router.events.subscribe((event) => {
+    //   if (
+    //     event instanceof NavigationEnd &&
+    //     !this.loggedIn() &&
+    //     event.url !== '/register'
+    //   ) {
+    //     void this.router.navigate(['/login']);
+    //   }
+    // });
   }
 
   loggedIn(): boolean {
