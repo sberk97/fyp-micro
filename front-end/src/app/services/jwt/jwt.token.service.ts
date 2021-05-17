@@ -1,20 +1,29 @@
 import { Injectable } from '@angular/core';
 import jwt_decode from 'jwt-decode';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JWTTokenService {
+  constructor(private cookieService: CookieService) {}
+
   jwtToken!: string;
   decodedToken!: { [key: string]: string };
 
-  public setToken(token: string): void {
-    if (token) {
-      this.jwtToken = token;
+  public setToken(jwt: string): void {
+    if (jwt) {
+      this.cookieService.set('jwt', jwt, 1, '/');
+      this.jwtToken = jwt;
+      this.cookieService.set('username', this.getUser(), 1, '/');
+      this.cookieService.set('roles', this.getRoles(), 1, '/');
     }
   }
 
   public removeToken(): void {
+    this.cookieService.delete('jwt', '/');
+    this.cookieService.delete('username', '/');
+    this.cookieService.delete('roles', '/');
     this.jwtToken = '';
   }
 

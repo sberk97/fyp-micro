@@ -38,20 +38,6 @@ export class LoginComponent implements OnInit {
     this.backendService.authenticate(this.username, this.password).subscribe(
       (response) => {
         this.jwtTokenService.setToken(response.jwt);
-
-        this.cookieService.set(
-          'username',
-          this.jwtTokenService.getUser(),
-          1,
-          '/'
-        );
-        this.cookieService.set(
-          'roles',
-          this.jwtTokenService.getRoles(),
-          1,
-          '/'
-        );
-        this.cookieService.set('jwt', response.jwt, 1, '/');
         void this.router.navigate(['/']);
       },
       (error: HttpErrorResponse) => {

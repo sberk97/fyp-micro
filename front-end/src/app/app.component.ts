@@ -40,7 +40,6 @@ export class AppComponent {
   }
 
   logOut(): void {
-    this.cookieService.delete('jwt', '/');
     this.jwtTokenService.removeToken();
     void this.router.navigate(['/']);
   }
