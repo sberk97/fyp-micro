@@ -53,4 +53,9 @@ export class BackendService {
       this.endpoint + registerPath + numberOfAdvertsRequested.toString()
     );
   }
+
+  public getAdvertByTiitle(title: string): Observable<Advert[]> {
+    const registerPath = 'advert-service/adverts?title=';
+    return this.http.get<Advert[]>(this.endpoint + registerPath + title);
+  }
 }
