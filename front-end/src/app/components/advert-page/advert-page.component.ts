@@ -11,6 +11,7 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 })
 export class AdvertPageComponent implements OnInit, OnDestroy {
   private routeSub!: Subscription;
+  advertLoaded!: Promise<boolean>;
 
   loadingFailed = false;
   failedMsg = '';
@@ -31,6 +32,7 @@ export class AdvertPageComponent implements OnInit, OnDestroy {
     this.backendService.getAdvert(this.id).subscribe(
       (response: Advert) => {
         this.advert = response;
+        this.advertLoaded = Promise.resolve(true);
       },
       (error: HttpErrorResponse) => {
         this.loadingFailed = true;
