@@ -44,4 +44,13 @@ export class BackendService {
     const registerPath = 'advert-service/adverts/';
     return this.http.get<Advert>(this.endpoint + registerPath + id.toString());
   }
+
+  public getLastNAdverts(
+    numberOfAdvertsRequested: number
+  ): Observable<Advert[]> {
+    const registerPath = 'advert-service/adverts-latest?last=';
+    return this.http.get<Advert[]>(
+      this.endpoint + registerPath + numberOfAdvertsRequested.toString()
+    );
+  }
 }
