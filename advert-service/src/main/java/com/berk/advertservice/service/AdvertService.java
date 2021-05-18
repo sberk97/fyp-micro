@@ -4,8 +4,11 @@ import com.berk.advertservice.model.AddAdvert;
 import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.model.AdvertRepository;
 import com.berk.advertservice.model.ReturnUserDetails;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +35,11 @@ public class AdvertService {
 
     public Optional<List<Advert>> getAdvertsByUserId(int id) {
         return advertRepository.findAllByUserId(id);
+    }
+
+    public Optional<List<Advert>> getLastNAdverts(int numberOfAdvertsRequested) {
+        Pageable pageable = PageRequest.of(0, numberOfAdvertsRequested, Sort.Direction.DESC, "creationDate");
+        return advertRepository.findByOrderByCreationDateDesc(pageable);
     }
 
 //    public Optional<List<Advert>> getAdverts(Specification<Advert> advertSpec) {
