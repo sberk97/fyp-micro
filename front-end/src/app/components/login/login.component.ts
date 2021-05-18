@@ -2,6 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { LoginResponse } from 'src/app/models/login-response/login-response';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
 
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     this.backendService.authenticate(this.username, this.password).subscribe(
-      (response) => {
+      (response: LoginResponse) => {
         this.jwtTokenService.setToken(response.jwt);
         void this.router.navigate(['/']);
       },

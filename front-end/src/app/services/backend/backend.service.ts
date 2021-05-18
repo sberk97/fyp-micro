@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { LoginResponse } from '../../models/login-response';
+import { LoginResponse } from '../../models/login-response/login-response';
+import { Advert } from 'src/app/models/advert/advert';
 
 @Injectable({
   providedIn: 'root',
@@ -37,5 +38,10 @@ export class BackendService {
       body,
       options
     );
+  }
+
+  public getAdvert(id: number): Observable<Advert> {
+    const registerPath = 'advert-service/adverts/';
+    return this.http.get<Advert>(this.endpoint + registerPath + id.toString());
   }
 }
