@@ -10,8 +10,6 @@ import { JWTTokenService } from './services/jwt/jwt.token.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Homepage - Freelancer hire';
-
   constructor(
     private route: ActivatedRoute,
     private router: Router,
