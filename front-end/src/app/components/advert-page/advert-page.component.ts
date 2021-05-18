@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Advert } from 'src/app/models/advert/advert';
 import { BackendService } from 'src/app/services/backend/backend.service';
@@ -18,6 +18,7 @@ export class AdvertPageComponent implements OnInit, OnDestroy {
   advert!: Advert;
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private backendService: BackendService
   ) {}
@@ -35,9 +36,9 @@ export class AdvertPageComponent implements OnInit, OnDestroy {
         this.loadingFailed = true;
         if (error.status === 404) {
           // redirect to 404 page
-          this.failedMsg = 'Advert not found!';
+          void this.router.navigate(['not-found']);
         } else {
-          this.failedMsg = 'Fetching advert failed.';
+          this.failedMsg = 'Fetching advert failed';
         }
       }
     );
