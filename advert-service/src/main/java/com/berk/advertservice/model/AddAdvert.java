@@ -15,7 +15,7 @@ public class AddAdvert {
     private String title;
 
     @NotBlank(message = "Description should not be empty.")
-    @Size(min = 10, max = 512, message = "Description must be between 10 and 512 characters")
+    @Size(min = 10, max = 1024, message = "Description must be between 10 and 1024 characters")
     private String description;
 
     public AddAdvert(int price, String title, String description) {
