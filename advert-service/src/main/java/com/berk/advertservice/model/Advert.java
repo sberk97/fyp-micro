@@ -1,6 +1,9 @@
 package com.berk.advertservice.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -22,10 +25,14 @@ public class Advert {
     private int price;
 
     @Column(name = "creation_date")
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonFormat(pattern="dd/MM/yyyy hh:mm")
     @JsonProperty("creation_date")
     private LocalDateTime creationDate;
 
     private String title;
+
+    @Column(name = "description", length = 1024)
     private String description;
 
     public int getId() {
