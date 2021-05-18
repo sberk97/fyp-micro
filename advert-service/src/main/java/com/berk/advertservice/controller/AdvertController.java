@@ -6,6 +6,7 @@ import com.berk.advertservice.service.AdvertService;
 import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,11 @@ public class AdvertController {
     @GetMapping(value = "/adverts/users/{id}")
     public ResponseEntity<List<Advert>> getAdvertsByUserId(@PathVariable int id) {
         return ResponseEntity.of(advertService.getAdvertsByUserId(id));
+    }
+
+    @GetMapping(value = "/adverts-latest")
+    public ResponseEntity<List<Advert>> getLastNAdverts(@RequestParam int last) {
+        return ResponseEntity.of(advertService.getLastNAdverts(last));
     }
 
     @GetMapping(value = "/adverts")
