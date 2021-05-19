@@ -1,9 +1,4 @@
-<form class="w-25 mx-auto mt-5" (ngSubmit)="onSubmit()">
-    <div class="input-group">
-        <input focusFirst [(ngModel)]="searchQuery" name="search" type="search" value="searchQuery" placeholder="What're you searching for?" class="form-control bg-light">
-        <button type="submit" class="btn btn-success">Search</button>
-    </div>
-</form>
+<app-search-bar [searchQuery]="searchQuery"></app-search-bar>
 
 <app-adverts-grid *ngIf="advertListLoaded" [advertList]="advertList"></app-adverts-grid>
 

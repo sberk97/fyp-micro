@@ -1,11 +1,6 @@
 <h1 class="text-center text-white mt-5">Find a freelancer!</h1>
 
-<form class="w-25 mx-auto mt-5" (ngSubmit)="onSubmit()">
-  <div class="input-group">
-    <input focusFirst [(ngModel)]="searchQuery" name="search" type="search" placeholder="What're you searching for?" class="form-control bg-light">
-    <button type="submit" class="btn btn-success">Search</button>
-  </div>
-</form>
+<app-search-bar></app-search-bar>
 
 <h2 class="text-center text-white mt-5">Recently added</h2>
 

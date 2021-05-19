@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import * as Base64 from 'js-base64';
 import { Advert } from 'src/app/models/advert/advert';
 import { BackendService } from 'src/app/services/backend/backend.service';
 
@@ -11,20 +9,13 @@ import { BackendService } from 'src/app/services/backend/backend.service';
 export class HomePageComponent implements OnInit {
   advertList!: Advert[];
   advertListLoaded!: Promise<boolean>;
-  searchQuery!: string;
 
-  constructor(private backendService: BackendService, private router: Router) {}
+  constructor(private backendService: BackendService) {}
 
   ngOnInit(): void {
     this.backendService.getLastNAdverts(5).subscribe((response: Advert[]) => {
       this.advertList = response;
       this.advertListLoaded = Promise.resolve(true);
     });
-  }
-
-  onSubmit(): void {
-    if (this.searchQuery.length > 0) {
-      void this.router.navigate(['search/' + Base64.encode(this.searchQuery)]);
-    }
   }
 }
