@@ -2,7 +2,7 @@
 
 <form class="w-25 mx-auto mt-5" (ngSubmit)="onSubmit()">
   <div class="input-group">
-    <input focusFirst [(ngModel)]="searchQuery" type="search" placeholder="What're you searching for?" class="form-control bg-light">
+    <input focusFirst [(ngModel)]="searchQuery" name="search" type="search" placeholder="What're you searching for?" class="form-control bg-light">
     <button type="submit" class="btn btn-success">Search</button>
   </div>
 </form>
