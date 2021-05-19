@@ -7,7 +7,7 @@
 
 <div *ngIf="advertListLoaded" class="row row-cols-4 w-75 mx-auto my-5">
     <div class="col mb-5" *ngFor="let advert of advertList">
-      <div class="card h-100">
+      <div class="card h-100 p-2 m-2">
         <div class="card-body">
             <h5 class="card-title"><a href="#" class="text-dark" role="button" [routerLink]="['/advert/' + advert.id]">{{advert.title}}</a></h5>
             <h6 class="card-subtitle mb-3 text-muted">Posted by: <a href="#" role="button" [routerLink]="['/user/' + advert.user_id]">{{advert.username}}</a></h6>
