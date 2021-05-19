@@ -1,15 +1,14 @@
 package com.berk.zuulserver.service;
 
-import com.berk.zuulserver.model.MyUserDetails;
-import com.berk.zuulserver.model.RegisterUser;
-import com.berk.zuulserver.model.User;
-import com.berk.zuulserver.model.UserRepository;
+import com.berk.zuulserver.model.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,21 +48,35 @@ public class MyUserDetailsService implements UserDetailsService {
         userRepository.save(newUser);
     }
 
-    public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<ReturnUserDetails> getUserByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        return user.map(this::userToUserDetails);
     }
 
-    public Optional<List<User>> getUserById(int id) {
+    public Optional<ReturnUserDetails> getUserById(int id) {
         Optional<User> user = userRepository.findById(id);
-        return user.map(List::of);
+        return user.map(this::userToUserDetails);
     }
 
-    public Optional<List<User>> getUsers() {
+    public Optional<List<ReturnUserDetails>> getUsers() {
         List<User> userList = userRepository.findAll();
-        return userList.isEmpty() ? Optional.empty() : Optional.of(userList);
+        List<ReturnUserDetails> userDetails = new ArrayList<>();
+        for (User u : userList) {
+            userDetails.add(userToUserDetails(u));
+        }
+        return userList.isEmpty() ? Optional.empty() : Optional.of(userDetails);
     }
 
     public void deleteUser(int id) {
         userRepository.deleteById(id);
+    }
+
+    private ReturnUserDetails userToUserDetails(User user) {
+        var userReturnData = new ReturnUserDetails();
+        userReturnData.setUsername(user.getUsername());
+        userReturnData.setId(user.getId());
+        userReturnData.setRoles(user.getRoles().split(","));
+
+        return userReturnData;
     }
 }

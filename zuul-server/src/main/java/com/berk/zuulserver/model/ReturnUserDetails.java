@@ -3,7 +3,7 @@ package com.berk.zuulserver.model;
 public class ReturnUserDetails {
     private int id;
     private String username;
-    private String roles;
+    private String[] roles;
 
     public int getId() {
         return id;
@@ -21,11 +21,11 @@ public class ReturnUserDetails {
         this.username = username;
     }
 
-    public String getRoles() {
+    public String[] getRoles() {
         return roles;
     }
 
-    public void setRoles(String roles) {
+    public void setRoles(String[] roles) {
         this.roles = roles;
     }
 }
