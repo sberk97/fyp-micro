@@ -15,60 +15,59 @@ export class BackendService {
   public endpoint = 'http://localhost:9092/api/';
 
   public register(username: string, password: string): Observable<string> {
-    const registerPath = 'register';
+    const path = 'register';
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
     const options = { headers };
     const body = { username: username, password: password };
-    return this.http.post<string>(this.endpoint + registerPath, body, options);
+    return this.http.post<string>(this.endpoint + path, body, options);
   }
 
   public authenticate(
     username: string,
     password: string
   ): Observable<LoginResponse> {
-    const authenticatePath = 'authenticate';
+    const path = 'authenticate';
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
     const options = { headers };
     const body = { username: username, password: password };
-    return this.http.post<LoginResponse>(
-      this.endpoint + authenticatePath,
-      body,
-      options
-    );
+    return this.http.post<LoginResponse>(this.endpoint + path, body, options);
   }
 
   public getAdvert(id: number): Observable<Advert> {
-    const registerPath = 'advert-service/adverts/';
-    return this.http.get<Advert>(this.endpoint + registerPath + id.toString());
+    const path = 'advert-service/adverts/';
+    return this.http.get<Advert>(this.endpoint + path + id.toString());
   }
 
   public getLastNAdverts(
     numberOfAdvertsRequested: number
   ): Observable<Advert[]> {
-    const registerPath = 'advert-service/adverts-latest?last=';
+    const path = 'advert-service/adverts-latest?last=';
     return this.http.get<Advert[]>(
-      this.endpoint + registerPath + numberOfAdvertsRequested.toString()
+      this.endpoint + path + numberOfAdvertsRequested.toString()
     );
   }
 
   public getAdvertByTiitle(title: string): Observable<Advert[]> {
-    const registerPath = 'advert-service/adverts?title=';
-    return this.http.get<Advert[]>(this.endpoint + registerPath + title);
+    const path = 'advert-service/adverts?title=';
+    return this.http.get<Advert[]>(this.endpoint + path + title);
   }
 
   public getUser(id: number): Observable<User> {
-    const registerPath = 'users/';
-    return this.http.get<User>(this.endpoint + registerPath + id.toString());
+    const path = 'users/';
+    return this.http.get<User>(this.endpoint + path + id.toString());
   }
 
   public getUserAdverts(id: number): Observable<Advert[]> {
-    const registerPath = 'advert-service/adverts/users/';
-    return this.http.get<Advert[]>(
-      this.endpoint + registerPath + id.toString()
-    );
+    const path = 'advert-service/adverts/users/';
+    return this.http.get<Advert[]>(this.endpoint + path + id.toString());
+  }
+
+  public deleteAdvertById(id: number): Observable<number> {
+    const path = 'advert-service/adverts/';
+    return this.http.delete<number>(this.endpoint + path + id.toString());
   }
 }
