@@ -86,4 +86,8 @@ public class AdvertService {
 
         return false;
     }
+
+    public void deleteAdvertsByUserId(int id) {
+        advertRepository.deleteByUserId(id);
+    }
 }
