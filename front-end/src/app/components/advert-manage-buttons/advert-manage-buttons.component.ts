@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
 
@@ -10,12 +11,14 @@ import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
 export class AdvertManageButtonsComponent implements OnInit {
   @Input() advertUserId!: number;
   @Input() advertId!: number;
+  @Input() shouldGoToHomePage = false;
 
   shouldBeVisible!: boolean;
 
   constructor(
     public backendService: BackendService,
-    public jwtTokenService: JWTTokenService
+    public jwtTokenService: JWTTokenService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -26,7 +29,11 @@ export class AdvertManageButtonsComponent implements OnInit {
 
   deleteAdvert(): void {
     this.backendService.deleteAdvertById(this.advertId).subscribe(() => {
-      window.location.reload();
+      if (!this.shouldGoToHomePage) {
+        window.location.reload();
+      } else {
+        void this.router.navigate(['/']);
+      }
     });
   }
 
