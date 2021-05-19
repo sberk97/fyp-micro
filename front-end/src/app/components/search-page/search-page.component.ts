@@ -49,10 +49,4 @@ export class SearchPageComponent implements OnInit {
       }
     });
   }
-
-  onSubmit(): void {
-    if (this.searchQuery.length > 0) {
-      void this.router.navigate(['search/' + Base64.encode(this.searchQuery)]);
-    }
-  }
 }

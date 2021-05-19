@@ -15,6 +15,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
 import { AdvertsGridComponent } from './components/adverts-grid/adverts-grid.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AdvertsGridComponent } from './components/adverts-grid/adverts-grid.com
     SearchPageComponent,
     UserPageComponent,
     AdvertsGridComponent,
+    SearchBarComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [
