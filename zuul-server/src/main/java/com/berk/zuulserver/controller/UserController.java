@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping(value = {"/users","/users/{id}"})
-    public ResponseEntity<List<User>> getUser(@PathVariable(required = false) Integer id) {
+    public ResponseEntity<List<ReturnUserDetails>> getUser(@PathVariable(required = false) Integer id) {
         if (id != null) {
             return ResponseEntity.of(userService.getUserById(id));
         } else {
