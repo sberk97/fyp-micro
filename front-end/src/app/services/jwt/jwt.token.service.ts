@@ -24,6 +24,7 @@ export class JWTTokenService {
     this.cookieService.delete('userId', '/');
     this.cookieService.delete('username', '/');
     this.cookieService.delete('roles', '/');
+    this.decodedToken = {};
   }
 
   private getToken(): string {
