@@ -8,7 +8,7 @@
                 <br>
                 <input type="password" [(ngModel)]="password" class="form-control" id="pwInput" name="password"
                     placeholder="Password" required #query="ngModel">
-                <div *ngIf="loginFailed==true" class="form-control mt-4 text-danger">{{failedMsg}}</div>
+                <div *ngIf="loginFailed" class="form-control mt-4 text-danger">{{failedMsg}}</div>
             </div>
             <button type="submit" [disabled]="!userForm.form.valid" id="loginButton" class="btn btn-info">Login</button>
         </form>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import * as Base64 from 'js-base64';
 import { Advert } from 'src/app/models/advert/advert';
 import { BackendService } from 'src/app/services/backend/backend.service';
 
@@ -23,7 +24,7 @@ export class HomePageComponent implements OnInit {
 
   onSubmit(): void {
     if (this.searchQuery.length > 0) {
-      // this.router.navigate(['search/' + Base64.encode(this.searchQuery)]);
+      void this.router.navigate(['search/' + Base64.encode(this.searchQuery)]);
     }
   }
 }

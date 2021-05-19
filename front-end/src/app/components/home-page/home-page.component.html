@@ -2,15 +2,15 @@
 
 <form class="w-25 mx-auto mt-5" (ngSubmit)="onSubmit()">
   <div class="input-group">
-    <input focusFirst [(ngModel)]="searchQuery" type="search" placeholder="What're you searching for?" class="form-control bg-light">
+    <input focusFirst [(ngModel)]="searchQuery" name="search" type="search" placeholder="What're you searching for?" class="form-control bg-light">
     <button type="submit" class="btn btn-success">Search</button>
   </div>
 </form>
 
 <h2 class="text-center text-white mt-5">Recently added</h2>
 
-<div class="card-deck w-75 mx-auto mt-5">
-    <div *ngFor="let advert of advertList" class="card p-2 m-2">
+<div *ngIf="advertListLoaded" class="card-deck w-75 mx-auto mt-5">
+    <div *ngFor="let advert of advertList" class="card p-2 m-2 shadow-lg">
       <div class="card-body">
         <h5 class="card-title"><a href="#" class="text-dark" role="button" [routerLink]="['/advert/' + advert.id]">{{advert.title}}</a></h5>
         <h6 class="card-subtitle mb-3 text-muted">Posted by: <a href="#" role="button" [routerLink]="['/user/' + advert.user_id]">{{advert.username}}</a></h6>

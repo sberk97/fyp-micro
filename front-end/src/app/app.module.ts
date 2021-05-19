@@ -12,6 +12,7 @@ import { AdvertPageComponent } from './components/advert-page/advert-page.compon
 import { UniversalAppInterceptor } from './services/universal-app-interceptor/universal-app-interceptor-service.service';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { SearchPageComponent } from './components/search-page/search-page.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     AdvertPageComponent,
     NotFoundPageComponent,
     HomePageComponent,
+    SearchPageComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [
