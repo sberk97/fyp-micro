@@ -11,7 +11,7 @@
                 <br>
                 <input type="password" [(ngModel)]="passwordSecond" class="form-control" id="pwInput" name="passwordSecond"
                     placeholder="Confirm password" required #query="ngModel">
-                <div *ngIf="registerFailed==true" class="form-control mt-4 text-danger">{{failedMsg}}</div>
+                <div *ngIf="registerFailed" class="form-control mt-4 text-danger">{{failedMsg}}</div>
             </div>
             <button type="submit" [disabled]="!userForm.form.valid" id="registerButton" class="btn btn-info">Register</button>
         </form>

@@ -23,6 +23,9 @@ export class SearchPageComponent implements OnInit {
   searchFailed = false;
   failedMsg!: string;
 
+  private priceOrder = false;
+  private titleOrder = false;
+
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       this.searchQuery = Base64.decode(params['query']);
@@ -54,5 +57,36 @@ export class SearchPageComponent implements OnInit {
     if (this.searchQuery.length > 0) {
       void this.router.navigate(['search/' + Base64.encode(this.searchQuery)]);
     }
+  }
+
+  sortPrice(): void {
+    this.priceOrder = !this.priceOrder;
+    this.advertList.sort((a, b) => {
+      return this.sort(a.price, b.price, this.priceOrder);
+    });
+  }
+
+  sortTitle(): void {
+    this.titleOrder = !this.titleOrder;
+    this.advertList.sort((a, b) => {
+      return this.sort(a.title, b.title, this.titleOrder);
+    });
+  }
+
+  sort(a: any, b: any, ascending: boolean): number {
+    if (a < b) {
+      if (ascending) {
+        return -1;
+      } else {
+        return 1;
+      }
+    } else if (a > b) {
+      if (ascending) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+    return 0;
   }
 }
