@@ -38,13 +38,14 @@ public class UserController {
         return ResponseEntity.of(userService.getUserByUsername(auth.getName()));
     }
 
-    @GetMapping(value = {"/users","/users/{id}"})
-    public ResponseEntity<List<ReturnUserDetails>> getUser(@PathVariable(required = false) Integer id) {
-        if (id != null) {
-            return ResponseEntity.of(userService.getUserById(id));
-        } else {
-            return ResponseEntity.of(userService.getUsers());
-        }
+    @GetMapping(value = "/users/{id}")
+    public ResponseEntity<ReturnUserDetails> getUserById(@PathVariable int id) {
+        return ResponseEntity.of(userService.getUserById(id));
+    }
+
+    @GetMapping(value = "/users")
+    public ResponseEntity<List<ReturnUserDetails>> getUsers() {
+        return ResponseEntity.of(userService.getUsers());
     }
 
     @DeleteMapping(value = "/users/{id}")

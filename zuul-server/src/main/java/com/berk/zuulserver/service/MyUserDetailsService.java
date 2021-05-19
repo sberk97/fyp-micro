@@ -53,9 +53,9 @@ public class MyUserDetailsService implements UserDetailsService {
         return user.map(this::userToUserDetails);
     }
 
-    public Optional<List<ReturnUserDetails>> getUserById(int id) {
+    public Optional<ReturnUserDetails> getUserById(int id) {
         Optional<User> user = userRepository.findById(id);
-        return user.map(value -> List.of(userToUserDetails(value)));
+        return user.map(this::userToUserDetails);
     }
 
     public Optional<List<ReturnUserDetails>> getUsers() {
