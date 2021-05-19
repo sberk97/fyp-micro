@@ -5,12 +5,11 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -43,7 +42,11 @@ public class JwtUtil {
     public String generateToken(MyUserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("userId", userDetails.getId());
-        claims.put("roles", userDetails.getAuthorities());
+        List<String> authoritiesArray = new ArrayList<>();
+        for (GrantedAuthority auth : userDetails.getAuthorities()) {
+            authoritiesArray.add(auth.getAuthority());
+        }
+        claims.put("roles", String.join(",", authoritiesArray));
         return createToken(claims, userDetails.getUsername());
     }
 
