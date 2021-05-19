@@ -13,9 +13,9 @@ export class JWTTokenService {
   public setToken(jwt: string): void {
     if (jwt) {
       this.cookieService.set('jwt', jwt, 1, '/');
-      this.cookieService.set('userId', this.getUserId(), 1, '/');
-      this.cookieService.set('username', this.getUser(), 1, '/');
-      this.cookieService.set('roles', this.getRoles(), 1, '/');
+      // this.cookieService.set('userId', this.getUserId(), 1, '/');
+      // this.cookieService.set('username', this.getUser(), 1, '/');
+      // this.cookieService.set('roles', this.getRoles(), 1, '/');
     }
   }
 
