@@ -1,3 +1,10 @@
+<form class="w-25 mx-auto mt-5" (ngSubmit)="onSubmit()">
+    <div class="input-group">
+        <input focusFirst [(ngModel)]="searchQuery" name="search" type="search" value="searchQuery" placeholder="What're you searching for?" class="form-control bg-light">
+        <button type="submit" class="btn btn-success">Search</button>
+    </div>
+</form>
+
 <div *ngIf="advertListLoaded" class="row row-cols-4 w-75 mx-auto my-5">
     <div class="col mb-5" *ngFor="let advert of advertList">
       <div class="card h-100">

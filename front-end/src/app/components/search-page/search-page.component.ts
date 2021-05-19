@@ -19,22 +19,24 @@ export class SearchPageComponent implements OnInit {
 
   advertList!: Advert[];
   advertListLoaded!: Promise<boolean>;
-  query!: string;
+  searchQuery = '';
   searchFailed = false;
   failedMsg!: string;
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
-      this.query = Base64.decode(params['query']);
-      if (this.query) {
-        this.backendService.getAdvertByTiitle(this.query).subscribe(
+      this.searchQuery = Base64.decode(params['query']);
+      this.searchFailed = false;
+      this.advertList = [];
+      this.advertListLoaded = Promise.resolve(false);
+      if (this.searchQuery) {
+        this.backendService.getAdvertByTiitle(this.searchQuery).subscribe(
           (data) => {
             this.advertList = data;
             this.advertListLoaded = Promise.resolve(true);
           },
           (error: HttpErrorResponse) => {
             this.searchFailed = true;
-            console.log('here');
             if (error.status === 404) {
               this.failedMsg = 'No results for your search';
             } else {
@@ -46,5 +48,11 @@ export class SearchPageComponent implements OnInit {
         void this.router.navigate(['not-found']);
       }
     });
+  }
+
+  onSubmit(): void {
+    if (this.searchQuery.length > 0) {
+      void this.router.navigate(['search/' + Base64.encode(this.searchQuery)]);
+    }
   }
 }
