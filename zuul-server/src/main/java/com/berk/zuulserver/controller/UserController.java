@@ -35,16 +35,7 @@ public class UserController {
     @GetMapping(value = "/user")
     public ResponseEntity<ReturnUserDetails> getLoggedInUserDetails() {
         var auth = SecurityContextHolder.getContext().getAuthentication();
-        Optional<User> user = userService.getUserByUsername(auth.getName());
-        if (user.isPresent()) {
-            var userReturnData = new ReturnUserDetails();
-            userReturnData.setUsername(user.get().getUsername());
-            userReturnData.setId(user.get().getId());
-            userReturnData.setRoles(user.get().getRoles());
-
-            return ResponseEntity.of(Optional.of(userReturnData));
-        }
-        return ResponseEntity.of(Optional.empty());
+        return ResponseEntity.of(userService.getUserByUsername(auth.getName()));
     }
 
     @GetMapping(value = {"/users","/users/{id}"})

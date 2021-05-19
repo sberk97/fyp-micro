@@ -1,9 +1,7 @@
 package com.berk.zuulserver.service;
 
-import com.berk.zuulserver.model.MyUserDetails;
-import com.berk.zuulserver.model.RegisterUser;
-import com.berk.zuulserver.model.User;
-import com.berk.zuulserver.model.UserRepository;
+import com.berk.zuulserver.model.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -49,8 +47,18 @@ public class MyUserDetailsService implements UserDetailsService {
         userRepository.save(newUser);
     }
 
-    public Optional<User> getUserByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public Optional<ReturnUserDetails> getUserByUsername(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if (user.isPresent()) {
+            var userReturnData = new ReturnUserDetails();
+            userReturnData.setUsername(user.get().getUsername());
+            userReturnData.setId(user.get().getId());
+            userReturnData.setRoles(user.get().getRoles());
+
+            return Optional.of(userReturnData);
+        }
+
+        return Optional.empty();
     }
 
     public Optional<List<User>> getUserById(int id) {
