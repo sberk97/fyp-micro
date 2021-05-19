@@ -72,7 +72,7 @@ public class AdvertController {
         if (!isRemoved) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Advert not found.");
         }
-
+        
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }

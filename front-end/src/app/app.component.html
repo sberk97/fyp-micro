@@ -25,13 +25,13 @@
             data-toggle="dropdown"
             aria-haspopup="true"
             aria-expanded="false">
-            {{cookieService.get('username')}}
+            {{jwtTokenService.getUser()}}
           </a>
           <div
             class="dropdown-menu"
             id="dropdown"
             aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" id="dropdownProfile" routerLink="profile">Profile</a>
+            <a class="dropdown-item" id="dropdownProfile" [routerLink]="['/user/' + jwtTokenService.getUserId()]">Profile</a>
             <a
               class="dropdown-item"
               id="dropdownAddAdvert"

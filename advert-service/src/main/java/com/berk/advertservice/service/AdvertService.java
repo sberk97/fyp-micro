@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,7 +78,7 @@ public class AdvertService {
 
         if (advert.isPresent()) {
             ReturnUserDetails user = userDetailsService.getCurrentUser();
-            if (user.getRoles().equals("ROLE_ADMIN") || user.getId() == advert.get().getUserId()) {
+            if (Arrays.asList(user.getRoles()).contains("ROLE_ADMIN") || user.getId() == advert.get().getUserId()) {
                 advertRepository.deleteById(id);
                 return true;
             }
