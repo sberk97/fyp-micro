@@ -14,6 +14,7 @@ import { NotFoundPageComponent } from './components/not-found-page/not-found-pag
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
+import { AdvertsGridComponent } from './components/adverts-grid/adverts-grid.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { UserPageComponent } from './components/user-page/user-page.component';
     HomePageComponent,
     SearchPageComponent,
     UserPageComponent,
+    AdvertsGridComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [
