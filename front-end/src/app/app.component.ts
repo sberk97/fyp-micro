@@ -31,9 +31,7 @@ export class AppComponent {
 
   loggedIn(): boolean {
     return (
-      this.cookieService.check('jwt') &&
-      this.cookieService.get('jwt').length > 0 &&
-      !this.jwtTokenService.isTokenExpired()
+      this.cookieService.check('jwt') && !this.jwtTokenService.isTokenExpired()
     );
   }
 
