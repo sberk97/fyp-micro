@@ -75,4 +75,9 @@ public class AdvertController {
         
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
+
+    @DeleteMapping(value = "/adverts/users/{id}")
+    public void deleteAdvertsByUserId(@PathVariable int id) {
+        advertService.deleteAdvertsByUserId(id);
+    }
 }
