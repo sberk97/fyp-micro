@@ -75,7 +75,7 @@ public class MyUserDetailsService implements UserDetailsService {
         var userReturnData = new ReturnUserDetails();
         userReturnData.setUsername(user.getUsername());
         userReturnData.setId(user.getId());
-        userReturnData.setRoles(user.getRoles());
+        userReturnData.setRoles(user.getRoles().split(","));
 
         return userReturnData;
     }
