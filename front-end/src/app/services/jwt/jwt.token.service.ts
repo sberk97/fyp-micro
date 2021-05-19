@@ -15,6 +15,7 @@ export class JWTTokenService {
     if (jwt) {
       this.cookieService.set('jwt', jwt, 1, '/');
       this.jwtToken = jwt;
+      this.cookieService.set('userId', this.getUserId(), 1, '/');
       this.cookieService.set('username', this.getUser(), 1, '/');
       this.cookieService.set('roles', this.getRoles(), 1, '/');
     }
@@ -22,6 +23,7 @@ export class JWTTokenService {
 
   public removeToken(): void {
     this.cookieService.delete('jwt', '/');
+    this.cookieService.delete('userId', '/');
     this.cookieService.delete('username', '/');
     this.cookieService.delete('roles', '/');
     this.jwtToken = '';
@@ -35,6 +37,11 @@ export class JWTTokenService {
 
   public getDecodeToken(): string {
     return jwt_decode(this.jwtToken);
+  }
+
+  public getUserId(): string {
+    this.decodeToken();
+    return this.decodedToken ? this.decodedToken.userId : '';
   }
 
   public getUser(): string {

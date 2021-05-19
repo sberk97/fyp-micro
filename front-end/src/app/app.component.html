@@ -31,7 +31,7 @@
             class="dropdown-menu"
             id="dropdown"
             aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" id="dropdownProfile" routerLink="profile">Profile</a>
+            <a class="dropdown-item" id="dropdownProfile" [routerLink]="['/user/' + cookieService.get('userId')]">Profile</a>
             <a
               class="dropdown-item"
               id="dropdownAddAdvert"
