@@ -33,6 +33,8 @@ export class AddAdvertPageComponent {
         this.postFailed = true;
         if (error.status === 400) {
           this.failedMsg = error.error as string;
+        } else if (error.status === 401) {
+          void this.router.navigate(['/login']);
         } else {
           this.failedMsg = 'Adding advert failed!';
         }
