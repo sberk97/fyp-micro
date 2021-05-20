@@ -6,6 +6,7 @@ export class Advert {
     public price: number,
     public creation_date: Date,
     public title: string,
-    public description: string
+    public description: string,
+    public contact_details: string
   ) {}
 }
