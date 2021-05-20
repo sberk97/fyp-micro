@@ -10,18 +10,23 @@ public class AddAdvert {
     @Max(value = Integer.MAX_VALUE)
     private int price;
 
-    @NotBlank(message = "Title should not be empty.")
+    @NotBlank(message = "Title should not be empty")
     @Size(min = 6, max = 60, message = "Title must be between 6 and 60 characters")
     private String title;
 
-    @NotBlank(message = "Description should not be empty.")
+    @NotBlank(message = "Description should not be empty")
     @Size(min = 10, max = 1024, message = "Description must be between 10 and 1024 characters")
     private String description;
 
-    public AddAdvert(int price, String title, String description) {
+    @NotBlank(message = "Contact details should not be empty")
+    @Size(min = 10, max = 60, message = "Contact details must be between 10 and 60 characters")
+    private String contactDetails;
+
+    public AddAdvert(int price, String title, String description, String contactDetails) {
         this.price = price;
         this.title = title;
         this.description = description;
+        this.contactDetails = contactDetails;
     }
 
     public int getPrice() {
@@ -46,5 +51,13 @@ public class AddAdvert {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getContactDetails() {
+        return contactDetails;
+    }
+
+    public void setContactDetails(String contactDetails) {
+        this.contactDetails = contactDetails;
     }
 }

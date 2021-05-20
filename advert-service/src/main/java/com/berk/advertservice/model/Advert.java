@@ -35,6 +35,10 @@ public class Advert {
     @Column(name = "description", length = 1024)
     private String description;
 
+    @Column(name = "contact_details", length = 60)
+    @JsonProperty("contact_details")
+    private String contactDetails;
+
     public int getId() {
         return id;
     }
@@ -89,5 +93,13 @@ public class Advert {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getContactDetails() {
+        return contactDetails;
+    }
+
+    public void setContactDetails(String contactDetails) {
+        this.contactDetails = contactDetails;
     }
 }
