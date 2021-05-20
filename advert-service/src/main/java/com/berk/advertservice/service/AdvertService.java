@@ -64,10 +64,10 @@ public class AdvertService {
         var advertOptional = advertRepository.findById(id);
         if (advertOptional.isPresent()) {
             var updatedAdvert = advertOptional.get();
-            advert.setTitle(advert.getTitle());
-            advert.setDescription(advert.getDescription());
-            advert.setPrice(advert.getPrice());
-            advert.setContactDetails(advert.getContactDetails());
+            updatedAdvert.setTitle(advert.getTitle());
+            updatedAdvert.setDescription(advert.getDescription());
+            updatedAdvert.setPrice(advert.getPrice());
+            updatedAdvert.setContactDetails(advert.getContactDetails());
             return Optional.of(advertRepository.saveAndFlush(updatedAdvert).getId());
         }
         return Optional.empty();
