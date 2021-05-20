@@ -58,7 +58,10 @@ export class EditAdvertPageComponent implements OnInit, OnDestroy {
   }
 
   determineOwner(): void {
-    if (this.jwtTokenService.getUserId() == this.advert.user_id.toString()) {
+    if (
+      this.jwtTokenService.getRoles() == 'ROLE_ADMIN' ||
+      this.jwtTokenService.getUserId() == this.advert.user_id.toString()
+    ) {
       this.advertLoaded = Promise.resolve(true);
     } else {
       this.operationFailed = true;
