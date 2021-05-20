@@ -50,9 +50,8 @@ public class AdvertController {
     }
 
     @PostMapping(value = "/adverts")
-    public ResponseEntity<?> addAdvert(@Valid @RequestBody AddAdvert advert) {
-        advertService.addAdvert(advert);
-        return ResponseEntity.ok("Advert has been added");
+    public ResponseEntity<Integer> addAdvert(@Valid @RequestBody AddAdvert advert) {
+        return new ResponseEntity<>(advertService.addAdvert(advert), HttpStatus.OK);
     }
 
 //    @GetMapping(value = "/adverts")

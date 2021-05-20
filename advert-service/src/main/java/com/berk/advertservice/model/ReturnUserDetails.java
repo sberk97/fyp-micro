@@ -3,7 +3,7 @@ package com.berk.advertservice.model;
 public class ReturnUserDetails {
     private int id;
     private String username;
-    private String roles[];
+    private String[] roles;
 
     public int getId() {
         return id;

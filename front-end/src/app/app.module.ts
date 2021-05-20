@@ -17,6 +17,8 @@ import { UserPageComponent } from './components/user-page/user-page.component';
 import { AdvertsGridComponent } from './components/adverts-grid/adverts-grid.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { AdvertManageButtonsComponent } from './components/advert-manage-buttons/advert-manage-buttons.component';
+import { AddAdvertPageComponent } from './components/add-advert-page/add-advert-page.component';
+import { AuthorizeGuard } from './services/authorize-guard/authorize-guard.service';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ import { AdvertManageButtonsComponent } from './components/advert-manage-buttons
     AdvertsGridComponent,
     SearchBarComponent,
     AdvertManageButtonsComponent,
+    AddAdvertPageComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [
@@ -40,6 +43,7 @@ import { AdvertManageButtonsComponent } from './components/advert-manage-buttons
       useClass: UniversalAppInterceptor,
       multi: true,
     },
+    AuthorizeGuard,
   ],
   bootstrap: [AppComponent],
 })
