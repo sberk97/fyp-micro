@@ -5,12 +5,12 @@
         <h6 class="card-subtitle mb-2 text-muted">Price: £{{advert.price}}</h6>
         <p class="card-text advert-desc">{{advert.description}}</p>
         <div *ngIf="!jwtTokenService.isTokenExpired()">
-            <p class="card-text">Contact details:</p>
+            <h6 class="card-subtitle text-muted">Contact details:</h6>
             <p class="card-text advert-desc">{{advert.contact_details}}</p>
         </div>
     </div>
     <div class="card-footer text-muted">
-        Added {{advert.creation_date}}
+        Posted {{advert.creation_date}}
         <app-advert-manage-buttons [advertUserId]="advert.user_id" [advertId]="advert.id" [shouldGoToHomePage]="true"></app-advert-manage-buttons>
     </div>
 </div>

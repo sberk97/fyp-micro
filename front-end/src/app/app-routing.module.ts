@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddAdvertPageComponent } from './components/add-advert-page/add-advert-page.component';
 import { AdvertPageComponent } from './components/advert-page/advert-page.component';
+import { EditAdvertPageComponent } from './components/edit-advert-page/edit-advert-page.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { LoginComponent } from './components/login/login.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
@@ -20,6 +21,11 @@ const routes: Routes = [
   {
     path: 'add-advert',
     component: AddAdvertPageComponent,
+    canActivate: [AuthorizeGuard],
+  },
+  {
+    path: 'edit-advert/:id',
+    component: EditAdvertPageComponent,
     canActivate: [AuthorizeGuard],
   },
   { path: 'not-found', component: NotFoundPageComponent },

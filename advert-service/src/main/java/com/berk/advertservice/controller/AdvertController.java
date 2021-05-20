@@ -54,6 +54,11 @@ public class AdvertController {
         return new ResponseEntity<>(advertService.addAdvert(advert), HttpStatus.OK);
     }
 
+    @PutMapping(value = "/adverts/{id}")
+    public ResponseEntity<Integer> editAdvert(@Valid @RequestBody AddAdvert advert, @PathVariable int id) {
+        return ResponseEntity.of(advertService.editAdvert(advert, id));
+    }
+
 //    @GetMapping(value = "/adverts")
 //    public ResponseEntity<List<Advert>> getAdverts(
 //            @And({

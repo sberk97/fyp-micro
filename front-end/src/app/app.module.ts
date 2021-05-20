@@ -19,6 +19,7 @@ import { SearchBarComponent } from './components/search-bar/search-bar.component
 import { AdvertManageButtonsComponent } from './components/advert-manage-buttons/advert-manage-buttons.component';
 import { AddAdvertPageComponent } from './components/add-advert-page/add-advert-page.component';
 import { AuthorizeGuard } from './services/authorize-guard/authorize-guard.service';
+import { EditAdvertPageComponent } from './components/edit-advert-page/edit-advert-page.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AuthorizeGuard } from './services/authorize-guard/authorize-guard.servi
     SearchBarComponent,
     AdvertManageButtonsComponent,
     AddAdvertPageComponent,
+    EditAdvertPageComponent,
   ],
   imports: [BrowserModule, FormsModule, HttpClientModule, AppRoutingModule],
   providers: [
