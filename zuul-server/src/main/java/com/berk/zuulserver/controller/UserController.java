@@ -50,6 +50,10 @@ public class UserController {
 
     @DeleteMapping(value = "/users/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable int id) {
+        ReturnUserDetails userDetails = getLoggedInUserDetails().getBody();
+        if (userDetails != null && userDetails.getId() == id)  {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You can't remove yourself");
+        }
         userService.deleteUser(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }

@@ -70,4 +70,14 @@ export class BackendService {
     const path = 'advert-service/adverts/';
     return this.http.delete<number>(this.endpoint + path + id.toString());
   }
+
+  public deleteUserById(id: number): Observable<number> {
+    const path = 'users/';
+    return this.http.delete<number>(this.endpoint + path + id.toString());
+  }
+
+  public deleteAdvertsByUserId(id: number): Observable<void> {
+    const path = 'advert-service/adverts/users/';
+    return this.http.delete<void>(this.endpoint + path + id.toString());
+  }
 }
