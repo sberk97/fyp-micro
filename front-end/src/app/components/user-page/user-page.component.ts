@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Advert } from 'src/app/models/advert/advert';
 import { User } from 'src/app/models/user/user';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
 
 @Component({
   templateUrl: './user-page.component.html',
@@ -25,7 +26,8 @@ export class UserPageComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private backendService: BackendService
+    private backendService: BackendService,
+    public jwtTokenService: JWTTokenService
   ) {}
 
   ngOnInit(): void {
@@ -68,11 +70,19 @@ export class UserPageComponent implements OnInit, OnDestroy {
       (error: HttpErrorResponse) => {
         this.advertsLoadingFailed = true;
         if (error.status === 404) {
-          this.userFailedMsg = 'This user does not have any adverts';
+          this.advertsFailedMsg = 'This user does not have any adverts';
         } else {
-          this.userFailedMsg = 'Fetching adverts failed';
+          this.advertsFailedMsg = 'Fetching adverts failed';
         }
       }
     );
+  }
+
+  public deleteUser(): void {
+    this.backendService.deleteUserById(this.user.id).subscribe(() => {
+      this.backendService.deleteAdvertsByUserId(this.user.id).subscribe(() => {
+        void this.router.navigate(['/']);
+      });
+    });
   }
 }
