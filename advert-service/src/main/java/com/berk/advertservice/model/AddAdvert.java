@@ -1,5 +1,7 @@
 package com.berk.advertservice.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
@@ -20,6 +22,7 @@ public class AddAdvert {
 
     @NotBlank(message = "Contact details should not be empty")
     @Size(min = 10, max = 60, message = "Contact details must be between 10 and 60 characters")
+    @JsonProperty("contact_details")
     private String contactDetails;
 
     public AddAdvert(int price, String title, String description, String contactDetails) {

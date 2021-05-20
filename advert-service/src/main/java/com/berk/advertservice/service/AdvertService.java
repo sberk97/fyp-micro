@@ -47,7 +47,7 @@ public class AdvertService {
 //        return advertRepository.findAll(advertSpec);
 //    }
 
-    public void addAdvert(AddAdvert advert) {
+    public int addAdvert(AddAdvert advert) {
         ReturnUserDetails user = userDetailsService.getCurrentUser();
         var newAdvert = new Advert();
         newAdvert.setTitle(advert.getTitle());
@@ -57,7 +57,7 @@ public class AdvertService {
         newAdvert.setUsername(user.getUsername());
         newAdvert.setCreationDate(LocalDateTime.now());
         newAdvert.setContactDetails(advert.getContactDetails());
-        advertRepository.save(newAdvert);
+        return advertRepository.saveAndFlush(newAdvert).getId();
     }
 
 //    public List<Advert> getAll() {
