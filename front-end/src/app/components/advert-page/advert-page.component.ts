@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Advert } from 'src/app/models/advert/advert';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
 
 @Component({
   templateUrl: './advert-page.component.html',
@@ -21,7 +22,8 @@ export class AdvertPageComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private backendService: BackendService
+    private backendService: BackendService,
+    public jwtTokenService: JWTTokenService
   ) {}
 
   ngOnInit(): void {
