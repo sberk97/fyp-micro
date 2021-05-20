@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -76,6 +77,7 @@ public class AdvertController {
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
 
+    @Transactional
     @DeleteMapping(value = "/adverts/users/{id}")
     public void deleteAdvertsByUserId(@PathVariable int id) {
         advertService.deleteAdvertsByUserId(id);
