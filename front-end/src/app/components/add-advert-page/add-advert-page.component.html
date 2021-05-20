@@ -1,1 +1,22 @@
-<p>add-advert-page works!</p>
+<h2 class="text-center text-white py-3">Fill the details to add your advert</h2>
+<div class="card my-5">
+    <div class="card-body">
+        <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+            <div class="form-group">
+                <input type="text" [(ngModel)]="title" class="form-control" id="title" name="title"
+                    placeholder="Title" required #query="ngModel" required pattern="\w{6,60}">
+                <br>
+                <input type="number" min="0" [(ngModel)]="price" class="form-control" id="price" name="price"
+                    placeholder="Price" required #query="ngModel">
+                <br>
+                <input type="text" [(ngModel)]="contactDetails" class="form-control" id="contactDetails" name="contactDetails"
+                    placeholder="Contact details" required pattern="\w{10,60}" #query="ngModel">
+                <br>
+                <input type="text" [(ngModel)]="description" class="form-control" id="description" name="description"
+                    placeholder="Description" required pattern="\w{10,1024}" #query="ngModel">
+                <div *ngIf="postFailed" class="form-control mt-4 text-danger">{{failedMsg}}</div>
+            </div>
+            <button type="submit" [disabled]="!userForm.form.valid" id="postButton" class="btn btn-info">Post advert</button>
+        </form>
+    </div>
+</div>

@@ -81,12 +81,12 @@ export class BackendService {
     return this.http.delete<void>(this.endpoint + path + id.toString());
   }
 
-  public addAdvert(body: string[]): Observable<string> {
+  public addAdvert(body: unknown): Observable<number> {
     const path = 'advert-service/adverts';
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
     const options = { headers };
-    return this.http.post<string>(this.endpoint + path, body, options);
+    return this.http.post<number>(this.endpoint + path, body, options);
   }
 }
