@@ -60,6 +60,19 @@ public class AdvertService {
         return advertRepository.saveAndFlush(newAdvert).getId();
     }
 
+    public Optional<Integer> editAdvert(AddAdvert advert, int id) {
+        var advertOptional = advertRepository.findById(id);
+        if (advertOptional.isPresent()) {
+            var updatedAdvert = advertOptional.get();
+            advert.setTitle(advert.getTitle());
+            advert.setDescription(advert.getDescription());
+            advert.setPrice(advert.getPrice());
+            advert.setContactDetails(advert.getContactDetails());
+            return Optional.of(advertRepository.saveAndFlush(updatedAdvert).getId());
+        }
+        return Optional.empty();
+    }
+
 //    public List<Advert> getAll() {
 //        return advertRepository.findAll();
 //    }
