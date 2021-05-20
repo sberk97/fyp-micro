@@ -80,4 +80,13 @@ export class BackendService {
     const path = 'advert-service/adverts/users/';
     return this.http.delete<void>(this.endpoint + path + id.toString());
   }
+
+  public addAdvert(body: string[]): Observable<string> {
+    const path = 'advert-service/adverts';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    const options = { headers };
+    return this.http.post<string>(this.endpoint + path, body, options);
+  }
 }
