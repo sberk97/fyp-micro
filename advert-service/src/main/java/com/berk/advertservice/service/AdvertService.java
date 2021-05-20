@@ -56,6 +56,7 @@ public class AdvertService {
         newAdvert.setUserId(user.getId());
         newAdvert.setUsername(user.getUsername());
         newAdvert.setCreationDate(LocalDateTime.now());
+        newAdvert.setContactDetails(advert.getContactDetails());
         advertRepository.save(newAdvert);
     }
 
