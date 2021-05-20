@@ -9,14 +9,10 @@ export class AuthorizeGuard implements CanActivate {
   constructor(private router: Router, private jwtService: JWTTokenService) {}
 
   canActivate(): boolean {
-    if (this.jwtService.getUser()) {
-      if (this.jwtService.isTokenExpired()) {
-        void this.router.navigate(['/login']);
-      } else {
-        return true;
-      }
+    if (!this.jwtService.isTokenExpired()) {
+      return true;
     }
-
+    void this.router.navigate(['login']);
     return false;
   }
 }
