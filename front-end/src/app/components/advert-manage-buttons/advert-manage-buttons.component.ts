@@ -37,5 +37,7 @@ export class AdvertManageButtonsComponent implements OnInit {
     });
   }
 
-  editAdvert(): void {}
+  editAdvert(): void {
+    void this.router.navigate(['/edit-advert/' + this.advertId.toString()]);
+  }
 }
