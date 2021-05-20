@@ -89,4 +89,17 @@ export class BackendService {
     const options = { headers };
     return this.http.post<number>(this.endpoint + path, body, options);
   }
+
+  public editAdvert(body: unknown, id: number): Observable<number> {
+    const path = 'advert-service/adverts/';
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    const options = { headers };
+    return this.http.put<number>(
+      this.endpoint + path + id.toString(),
+      body,
+      options
+    );
+  }
 }
