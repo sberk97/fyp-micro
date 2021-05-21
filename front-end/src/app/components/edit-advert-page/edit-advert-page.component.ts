@@ -11,7 +11,8 @@ import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
   styleUrls: ['./edit-advert-page.component.scss'],
 })
 export class EditAdvertPageComponent implements OnInit, OnDestroy {
-  private routeSub!: Subscription;
+  private subscription: Subscription = new Subscription();
+
   advertId!: number;
   failedMsg = '';
   operationFailed = false;
@@ -24,15 +25,33 @@ export class EditAdvertPageComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private backendService: BackendService,
-    public jwtTokenService: JWTTokenService
+    private jwtTokenService: JWTTokenService
   ) {}
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe((params) => {
-      this.advertId = params['id'] as number;
-    });
+    this.getIdFromPath();
 
     if (!this.jwtTokenService.isTokenExpired()) {
+      this.getAdvert();
+    } else {
+      void this.router.navigate(['/login']);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private getIdFromPath(): void {
+    this.subscription.add(
+      this.route.params.subscribe((params) => {
+        this.advertId = params['id'] as number;
+      })
+    );
+  }
+
+  private getAdvert(): void {
+    this.subscription.add(
       this.backendService.getAdvert(this.advertId).subscribe(
         (response: Advert) => {
           this.advert = response;
@@ -47,19 +66,13 @@ export class EditAdvertPageComponent implements OnInit, OnDestroy {
             this.failedMsg = 'Fetching advert failed';
           }
         }
-      );
-    } else {
-      void this.router.navigate(['/login']);
-    }
+      )
+    );
   }
 
-  ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
-  }
-
-  determineOwner(): void {
+  private determineOwner(): void {
     if (
-      this.jwtTokenService.getRoles() == 'ROLE_ADMIN' ||
+      this.jwtTokenService.isAdmin() ||
       this.jwtTokenService.getUserId() == this.advert.user_id.toString()
     ) {
       this.advertLoaded = Promise.resolve(true);
@@ -69,7 +82,7 @@ export class EditAdvertPageComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     const body = {
       title: this.advert.title,
       description: this.advert.description,
