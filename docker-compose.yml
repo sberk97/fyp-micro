@@ -6,6 +6,7 @@ services:
     build:
       context: ./eureka-server
       dockerfile: Dockerfile
+    restart: on-failure
     ports:
       - 8761:8761
 #  config:
@@ -56,6 +57,23 @@ services:
 #      - config
     ports:
       - 9093
+  front-end:
+    image: front-end
+    container_name: front-end
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    restart: on-failure
+    depends_on:
+      - eureka-server
+      - zuul-server
+      - advert-service
+      - db
+      #      - config
+    ports:
+      - 4200:80
+    links:
+      - zuul-server
   db:
     image: 'mysql:latest'
     container_name: db

@@ -11,7 +11,6 @@ import { User } from 'src/app/models/user/user';
 export class BackendService {
   constructor(private http: HttpClient) {}
 
-  // modify this so it points to your API
   private apiEndpoint = 'http://localhost:9092/api/';
 
   public register(username: string, password: string): Observable<string> {

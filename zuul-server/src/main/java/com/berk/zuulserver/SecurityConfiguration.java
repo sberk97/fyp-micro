@@ -81,6 +81,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/api/register", "/api/authenticate").permitAll()
                 .antMatchers(HttpMethod.GET,"/api/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.POST, "/api/advert-service/adverts").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.PUT, "/api/advert-service/adverts/{id}").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE, "/api/advert-service/adverts/{id}").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.GET,"/api/users").hasAnyRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE,"/api/users/{id}", "/api/advert-service/adverts/users/{id}").hasAnyRole("ADMIN")
