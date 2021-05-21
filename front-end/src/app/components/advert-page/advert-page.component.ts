@@ -32,6 +32,10 @@ export class AdvertPageComponent implements OnInit, OnDestroy {
     this.getAdvert();
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   private getIdFromPath(): void {
     this.subscription.add(
       this.route.params.subscribe((params) => {
@@ -58,9 +62,5 @@ export class AdvertPageComponent implements OnInit, OnDestroy {
         }
       )
     );
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 }
