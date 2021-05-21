@@ -13,9 +13,6 @@ export class JWTTokenService {
   public setToken(jwt: string): void {
     if (jwt) {
       this.cookieService.set('jwt', jwt, 1, '/');
-      // this.cookieService.set('userId', this.getUserId(), 1, '/');
-      // this.cookieService.set('username', this.getUser(), 1, '/');
-      // this.cookieService.set('roles', this.getRoles(), 1, '/');
     }
   }
 
@@ -27,11 +24,11 @@ export class JWTTokenService {
     this.decodedToken = {};
   }
 
-  private getToken(): string {
+  public getToken(): string {
     return this.cookieService.get('jwt');
   }
 
-  public decodeToken(): void {
+  private decodeToken(): void {
     const jwtToken = this.getToken();
     if (jwtToken) {
       this.decodedToken = jwt_decode(jwtToken);
@@ -69,5 +66,13 @@ export class JWTTokenService {
     } else {
       return true;
     }
+  }
+
+  public isLoggedIn(): boolean {
+    return this.cookieService.check('jwt') && !this.isTokenExpired();
+  }
+
+  public isAdmin(): boolean {
+    return this.isLoggedIn() && this.getRoles() == 'ROLE_ADMIN';
   }
 }
