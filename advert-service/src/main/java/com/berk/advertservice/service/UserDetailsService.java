@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.servlet.http.HttpServletRequest;
 
-@Service
+@Service("userDetailsService")
 public class UserDetailsService {
     private WebClient webClient;
 
