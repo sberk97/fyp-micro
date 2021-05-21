@@ -10,9 +10,10 @@ import { User } from 'src/app/models/user/user';
 })
 export class BackendService {
   constructor(private http: HttpClient) {}
-
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  apiUrl: string = window['env']['apiUrl'] as string;
   // modify this so it points to your API
-  private apiEndpoint = 'http://localhost:9092/api/';
+  private apiEndpoint = 'http://' + this.apiUrl + ':9092/api/';
 
   public register(username: string, password: string): Observable<string> {
     const path = 'register';
