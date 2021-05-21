@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 
 public class RegisterUser {
     @NotBlank(message = "Username should not be empty.")
-    @Size(min = 6, max = 32, message = "Username must be between 6 and 32 characters")
+    @Size(min = 6, max = 30, message = "Username must be between 6 and 30 characters")
     private String username;
 
     @NotBlank(message = "Password should not be empty.")
