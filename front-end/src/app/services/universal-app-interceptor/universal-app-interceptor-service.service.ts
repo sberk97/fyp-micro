@@ -6,21 +6,17 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { JWTTokenService } from '../jwt/jwt.token.service';
 @Injectable()
 export class UniversalAppInterceptor implements HttpInterceptor {
-  constructor(
-    private cookieService: CookieService,
-    private jwtTokenService: JWTTokenService
-  ) {}
+  constructor(private jwtTokenService: JWTTokenService) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = this.cookieService.get('jwt');
+    const token = this.jwtTokenService.getToken();
     if (!this.jwtTokenService.isTokenExpired()) {
       req = req.clone({
         url: req.url,
