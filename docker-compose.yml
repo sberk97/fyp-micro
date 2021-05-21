@@ -28,9 +28,8 @@ services:
       context: ./zuul-server
       dockerfile: Dockerfile
     environment:
-      - JAVA_OPTS=
-        -DEUREKA_SERVER=eureka-server
-        -DMYSQL_SERVER=db
+      - EUREKA_SERVER=eureka-server
+      - MYSQL_SERVER=db
     restart: on-failure
     depends_on:
       - eureka-server
@@ -45,10 +44,9 @@ services:
       context: ./advert-service
       dockerfile: Dockerfile
     environment:
-      - JAVA_OPTS=
-        -DEUREKA_SERVER=eureka-server
-        -DMYSQL_SERVER=db
-        -DZUUL_SERVER=zuul-server
+      - EUREKA_SERVER=eureka-server
+      - MYSQL_SERVER=db
+      - ZUUL_SERVER=zuul-server
     restart: on-failure
     depends_on:
       - eureka-server
