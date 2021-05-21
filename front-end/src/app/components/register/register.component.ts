@@ -1,15 +1,18 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { Subscription } from 'rxjs';
 import { BackendService } from 'src/app/services/backend/backend.service';
+import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
+
   username!: string;
   passwordFirst!: string;
   passwordSecond!: string;
@@ -20,38 +23,44 @@ export class RegisterComponent implements OnInit {
   constructor(
     private router: Router,
     private backendService: BackendService,
-    private cookieService: CookieService
+    private jwtTokenService: JWTTokenService
   ) {}
 
   ngOnInit(): void {
     // navigate to the root if we already have a token set (are logged in)
-    if (this.cookieService.check('jwt')) {
+    if (this.jwtTokenService.isLoggedIn()) {
       void this.router.navigate(['/']);
     }
   }
 
-  onSubmit(): void {
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  public onSubmit(): void {
     if (this.passwordFirst != this.passwordSecond) {
       this.registerFailed = true;
       this.failedMsg = "Passwords doesn't match!";
     } else {
-      this.backendService
-        .register(this.username, this.passwordSecond)
-        .subscribe(
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          () => {},
-          (error: HttpErrorResponse) => {
-            if (error.status === 200) {
-              void this.router.navigate(['/login']);
+      this.subscription.add(
+        this.backendService
+          .register(this.username, this.passwordSecond)
+          .subscribe(
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            () => {},
+            (error: HttpErrorResponse) => {
+              if (error.status === 200) {
+                void this.router.navigate(['/login']);
+              }
+              this.registerFailed = true;
+              if (error.status === 400 || error.status === 409) {
+                this.failedMsg = error.error as string;
+              } else {
+                this.failedMsg = 'Registration failed!';
+              }
             }
-            this.registerFailed = true;
-            if (error.status === 400 || error.status === 409) {
-              this.failedMsg = error.error as string;
-            } else {
-              this.failedMsg = 'Registration failed!';
-            }
-          }
-        );
+          )
+      );
     }
   }
 }
