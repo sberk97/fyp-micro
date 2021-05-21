@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
-import { BackendService } from './services/backend/backend.service';
+import { Router } from '@angular/router';
 import { JWTTokenService } from './services/jwt/jwt.token.service';
 
 @Component({
@@ -11,31 +9,15 @@ import { JWTTokenService } from './services/jwt/jwt.token.service';
 })
 export class AppComponent {
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private backendService: BackendService,
-    public cookieService: CookieService,
     public jwtTokenService: JWTTokenService
-  ) {
-    // listen to every routing event and redirect the route to login if the user is not logged in (or trying to sign up)
-    // this.router.events.subscribe((event) => {
-    //   if (
-    //     event instanceof NavigationEnd &&
-    //     !this.loggedIn() &&
-    //     event.url !== '/register'
-    //   ) {
-    //     void this.router.navigate(['/login']);
-    //   }
-    // });
+  ) {}
+
+  public loggedIn(): boolean {
+    return this.jwtTokenService.isLoggedIn();
   }
 
-  loggedIn(): boolean {
-    return (
-      this.cookieService.check('jwt') && !this.jwtTokenService.isTokenExpired()
-    );
-  }
-
-  logOut(): void {
+  public logOut(): void {
     this.jwtTokenService.removeToken();
     void this.router.navigate(['/']);
   }
