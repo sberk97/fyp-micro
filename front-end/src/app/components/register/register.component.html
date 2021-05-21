@@ -3,14 +3,14 @@
     <div class="card-body">
         <form (ngSubmit)="onSubmit()" #userForm="ngForm">
             <div class="form-group">
-                <input type="text" [(ngModel)]="username" class="form-control" id="username" name="username"
-                    placeholder="Username" required #query="ngModel" required pattern="\w{6,32}">
+                <input type="text" [(ngModel)]="username" minlength="6" maxlength="30" class="form-control" id="username" name="username"
+                    placeholder="Username" #query="ngModel" pattern="\w{6,30}" required>
                 <br>
-                <input type="password" [(ngModel)]="passwordFirst" class="form-control" id="pwInput" name="passwordFirst"
-                    placeholder="Password" required #query="ngModel">
+                <input type="password" [(ngModel)]="passwordFirst" minlength="6" maxlength="100" class="form-control" id="pwInput" name="passwordFirst"
+                    placeholder="Password" #query="ngModel" required>
                 <br>
-                <input type="password" [(ngModel)]="passwordSecond" class="form-control" id="pwInput" name="passwordSecond"
-                    placeholder="Confirm password" required #query="ngModel">
+                <input type="password" [(ngModel)]="passwordSecond" minlength="6" maxlength="100" class="form-control" id="pwInput" name="passwordSecond"
+                    placeholder="Confirm password" #query="ngModel" required>
                 <div *ngIf="registerFailed" class="form-control mt-4 text-danger">{{failedMsg}}</div>
             </div>
             <button type="submit" [disabled]="!userForm.form.valid" id="registerButton" class="btn btn-info">Register</button>

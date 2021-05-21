@@ -4,10 +4,10 @@
         <form (ngSubmit)="onSubmit()" #userForm="ngForm">
             <div class="form-group">
                 <input type="text" [(ngModel)]="username" class="form-control" id="username" name="username"
-                    placeholder="Username" required #query="ngModel" required pattern="\w{6,32}">
+                    placeholder="Username" #query="ngModel" pattern="\w{6,30}" required>
                 <br>
                 <input type="password" [(ngModel)]="password" class="form-control" id="pwInput" name="password"
-                    placeholder="Password" required #query="ngModel">
+                    placeholder="Password" #query="ngModel" required>
                 <div *ngIf="loginFailed" class="form-control mt-4 text-danger">{{failedMsg}}</div>
             </div>
             <button type="submit" [disabled]="!userForm.form.valid" id="loginButton" class="btn btn-info">Login</button>
