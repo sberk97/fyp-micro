@@ -25,7 +25,7 @@ export class AddAdvertPageComponent implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     const body = {
       title: this.title,
       description: this.description,
