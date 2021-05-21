@@ -14,7 +14,7 @@ RUN npm run ng build -- --configuration production --output-path=dist
 ### STAGE 2: Setup ###
 FROM nginx:stable-alpine
 
-COPY default.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /ng-app/default.conf /etc/nginx/conf.d/default.conf
 
 RUN rm -rf /usr/share/nginx/html/*
 
