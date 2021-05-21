@@ -1,5 +1,5 @@
 <h2 *ngIf="userLoaded" class="text-center text-white mt-4">Adverts of {{user.username}}</h2>
-<button *ngIf="userLoaded && jwtTokenService.getRoles() == 'ROLE_ADMIN' && jwtTokenService.getUserId() != user.id.toString()" (click)="deleteUser()" class="btn btn-danger mt-3 d-flex mx-auto">Delete user</button>
+<button *ngIf="userLoaded && jwtTokenService.isAdmin() && jwtTokenService.getUserId() != user.id.toString()" (click)="deleteUser()" class="btn btn-danger mt-3 d-flex mx-auto">Delete user</button>
 <h2 *ngIf="userLoadingFailed" class="text-center text-white mt-5">{{userFailedMsg}}</h2>
 
 <h2 *ngIf="advertsLoadingFailed" class="text-center text-white mt-5">{{advertsFailedMsg}}</h2>

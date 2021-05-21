@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { BackendService } from 'src/app/services/backend/backend.service';
 import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
 
@@ -8,7 +9,9 @@ import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
   templateUrl: './advert-manage-buttons.component.html',
   styleUrls: ['./advert-manage-buttons.component.scss'],
 })
-export class AdvertManageButtonsComponent implements OnInit {
+export class AdvertManageButtonsComponent implements OnInit, OnDestroy {
+  private subscription: Subscription = new Subscription();
+
   @Input() advertUserId!: number;
   @Input() advertId!: number;
   @Input() shouldGoToHomePage = false;
@@ -16,28 +19,34 @@ export class AdvertManageButtonsComponent implements OnInit {
   shouldBeVisible!: boolean;
 
   constructor(
-    public backendService: BackendService,
-    public jwtTokenService: JWTTokenService,
+    private backendService: BackendService,
+    private jwtTokenService: JWTTokenService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.shouldBeVisible =
       this.jwtTokenService.getUserId() == this.advertUserId.toString() ||
-      this.jwtTokenService.getRoles() == 'ROLE_ADMIN';
+      this.jwtTokenService.isAdmin();
   }
 
-  deleteAdvert(): void {
-    this.backendService.deleteAdvertById(this.advertId).subscribe(() => {
-      if (!this.shouldGoToHomePage) {
-        window.location.reload();
-      } else {
-        void this.router.navigate(['/']);
-      }
-    });
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
-  editAdvert(): void {
+  public deleteAdvert(): void {
+    this.subscription.add(
+      this.backendService.deleteAdvertById(this.advertId).subscribe(() => {
+        if (!this.shouldGoToHomePage) {
+          window.location.reload();
+        } else {
+          void this.router.navigate(['/']);
+        }
+      })
+    );
+  }
+
+  public editAdvert(): void {
     void this.router.navigate(['/edit-advert/' + this.advertId.toString()]);
   }
 }

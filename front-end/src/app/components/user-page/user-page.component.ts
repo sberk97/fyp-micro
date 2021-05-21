@@ -12,7 +12,8 @@ import { JWTTokenService } from 'src/app/services/jwt/jwt.token.service';
   styleUrls: ['./user-page.component.scss'],
 })
 export class UserPageComponent implements OnInit, OnDestroy {
-  private routeSub!: Subscription;
+  private subscription: Subscription = new Subscription();
+
   userLoaded!: Promise<boolean>;
   userAdvertsLoaded!: Promise<boolean>;
 
@@ -31,58 +32,74 @@ export class UserPageComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.routeSub = this.route.params.subscribe((params) => {
-      this.id = params['id'] as number;
-    });
+    this.getIdFromPath();
 
     this.getUser();
   }
 
   ngOnDestroy(): void {
-    this.routeSub.unsubscribe();
+    this.subscription.unsubscribe();
+  }
+
+  private getIdFromPath(): void {
+    this.subscription.add(
+      this.route.params.subscribe((params) => {
+        this.id = params['id'] as number;
+      })
+    );
   }
 
   private getUser(): void {
-    this.backendService.getUser(this.id).subscribe(
-      (response: User) => {
-        this.user = response;
-        this.userLoaded = Promise.resolve(true);
-        this.getUserAdverts();
-      },
-      (error: HttpErrorResponse) => {
-        this.userLoadingFailed = true;
-        if (error.status === 404) {
-          // redirect to 404 page
-          void this.router.navigate(['not-found']);
-        } else {
-          this.userFailedMsg = 'Fetching user failed';
+    this.subscription.add(
+      this.backendService.getUser(this.id).subscribe(
+        (response: User) => {
+          this.user = response;
+          this.userLoaded = Promise.resolve(true);
+          this.getUserAdverts();
+        },
+        (error: HttpErrorResponse) => {
+          this.userLoadingFailed = true;
+          if (error.status === 404) {
+            // redirect to 404 page
+            void this.router.navigate(['not-found']);
+          } else {
+            this.userFailedMsg = 'Fetching user failed';
+          }
         }
-      }
+      )
     );
   }
 
   private getUserAdverts(): void {
-    this.backendService.getUserAdverts(this.user.id).subscribe(
-      (response: Advert[]) => {
-        this.user.adverts = response;
-        this.userAdvertsLoaded = Promise.resolve(true);
-      },
-      (error: HttpErrorResponse) => {
-        this.advertsLoadingFailed = true;
-        if (error.status === 404) {
-          this.advertsFailedMsg = 'This user does not have any adverts';
-        } else {
-          this.advertsFailedMsg = 'Fetching adverts failed';
+    this.subscription.add(
+      this.backendService.getUserAdverts(this.user.id).subscribe(
+        (response: Advert[]) => {
+          this.user.adverts = response;
+          this.userAdvertsLoaded = Promise.resolve(true);
+        },
+        (error: HttpErrorResponse) => {
+          this.advertsLoadingFailed = true;
+          if (error.status === 404) {
+            this.advertsFailedMsg = 'This user does not have any adverts';
+          } else {
+            this.advertsFailedMsg = 'Fetching adverts failed';
+          }
         }
-      }
+      )
     );
   }
 
   public deleteUser(): void {
-    this.backendService.deleteUserById(this.user.id).subscribe(() => {
-      this.backendService.deleteAdvertsByUserId(this.user.id).subscribe(() => {
-        void this.router.navigate(['/']);
-      });
-    });
+    this.subscription.add(
+      this.backendService.deleteUserById(this.user.id).subscribe(() => {
+        this.subscription.add(
+          this.backendService
+            .deleteAdvertsByUserId(this.user.id)
+            .subscribe(() => {
+              void this.router.navigate(['/']);
+            })
+        );
+      })
+    );
   }
 }

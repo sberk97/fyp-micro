@@ -11,21 +11,21 @@ export class AdvertsGridComponent {
   private priceOrder = false;
   private titleOrder = false;
 
-  sortPrice(): void {
+  public sortPrice(): void {
     this.priceOrder = !this.priceOrder;
     this.advertList.sort((a, b) => {
       return this.sort(a.price, b.price, this.priceOrder);
     });
   }
 
-  sortTitle(): void {
+  public sortTitle(): void {
     this.titleOrder = !this.titleOrder;
     this.advertList.sort((a, b) => {
       return this.sort(a.title, b.title, this.titleOrder);
     });
   }
 
-  sort(a: any, b: any, ascending: boolean): number {
+  private sort(a: any, b: any, ascending: boolean): number {
     if (a < b) {
       if (ascending) {
         return -1;

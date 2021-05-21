@@ -12,7 +12,7 @@ export class SearchBarComponent {
 
   constructor(private router: Router) {}
 
-  onSubmit(): void {
+  public onSubmit(): void {
     if (this.searchQuery.length > 0) {
       void this.router.navigate(['search/' + Base64.encode(this.searchQuery)]);
     }
