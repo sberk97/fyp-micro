@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Sql(value = "/insert_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(value = "/clean_database.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-class AuthenticationControllerIT {
+class AuthenticationControllerITest {
 
     @LocalServerPort
     private int serverPort;
@@ -66,7 +66,7 @@ class AuthenticationControllerIT {
         user.setRoles("ROLE_ADMIN");
 
         Claims claims = jwtTokenUtil.extractAllClaims(jwtToken);
-        assertFalse(jwtTokenUtil.validateToken(jwtToken, new MyUserDetails(user)));
+        assertTrue(jwtTokenUtil.validateToken(jwtToken, new MyUserDetails(user)));
         assertEquals(1, claims.get("userId"));
         assertEquals("ROLE_ADMIN", claims.get("roles"));
     }
