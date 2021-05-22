@@ -1,8 +1,6 @@
 package com.berk.zuulserver.service;
 
 import com.berk.zuulserver.model.*;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,12 +23,12 @@ public class MyUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public MyUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public MyUserDetails loadUserByUsername(String username) {
         Optional<User> user = userRepository.findByUsername(username);
-
-        user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
-
-        return user.map(MyUserDetails::new).get();
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException("Not found: " + username);
+        }
+        return new MyUserDetails(user.get());
     }
 
     public boolean userExists(String username) {

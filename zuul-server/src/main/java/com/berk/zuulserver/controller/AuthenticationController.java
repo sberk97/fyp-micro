@@ -3,17 +3,12 @@ package com.berk.zuulserver.controller;
 import com.berk.zuulserver.model.AuthenticationRequest;
 import com.berk.zuulserver.model.AuthenticationResponse;
 import com.berk.zuulserver.model.MyUserDetails;
-import com.berk.zuulserver.model.ReturnUserDetails;
 import com.berk.zuulserver.service.MyUserDetailsService;
 import com.berk.zuulserver.util.JwtUtil;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -24,6 +19,7 @@ public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
 
+    @Resource(name = "jwtUtlService")
     private final JwtUtil jwtTokenUtil;
 
     @Resource(name = "userService")
@@ -35,21 +31,16 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<?> generateToken(@RequestBody AuthenticationRequest loginUser)
-            throws AuthenticationException {
-        try {
-            final Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginUser.getUsername(),
-                            loginUser.getPassword()
-                    )
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            final MyUserDetails user = userService.loadUserByUsername(loginUser.getUsername());
-            final String token = jwtTokenUtil.generateToken(user);
-            return ResponseEntity.ok(new AuthenticationResponse(token));
-        } catch (AuthenticationException e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password.");
-        }
+    public ResponseEntity<AuthenticationResponse> generateToken(@RequestBody AuthenticationRequest loginUser) {
+        final var authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginUser.getUsername(),
+                        loginUser.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final MyUserDetails user = userService.loadUserByUsername(loginUser.getUsername());
+        final String token = jwtTokenUtil.generateToken(user);
+        return ResponseEntity.ok(new AuthenticationResponse(token));
     }
 }

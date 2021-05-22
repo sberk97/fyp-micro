@@ -2,18 +2,15 @@ package com.berk.zuulserver.controller;
 
 import com.berk.zuulserver.model.RegisterUser;
 import com.berk.zuulserver.model.ReturnUserDetails;
-import com.berk.zuulserver.model.User;
 import com.berk.zuulserver.service.MyUserDetailsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")

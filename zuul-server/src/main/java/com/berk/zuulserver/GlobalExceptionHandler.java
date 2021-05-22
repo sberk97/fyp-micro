@@ -2,6 +2,7 @@ package com.berk.zuulserver;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -37,8 +38,8 @@ public class GlobalExceptionHandler {
     public Map<String, String> handleConstraintViolationException(ConstraintViolationException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getConstraintViolations().forEach(error -> {
-            String propertyPath = error.getPropertyPath().toString();
-            String fieldName = propertyPath.substring(propertyPath.lastIndexOf('.') + 1);
+            var propertyPath = error.getPropertyPath().toString();
+            var fieldName = propertyPath.substring(propertyPath.lastIndexOf('.') + 1);
             String errorMessage = error.getMessage();
             errors.put(fieldName, errorMessage);
         });
@@ -50,6 +51,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EmptyResultDataAccessException.class)
     public String handleEmptyResultDataExceptions(
             EmptyResultDataAccessException ex) {
+        String message = ex.getMessage();
+        return message.substring(message.lastIndexOf('.') + 1);
+    }
+
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    @ExceptionHandler(AuthenticationException.class)
+    public String handleAuthenticationException(AuthenticationException ex) {
         String message = ex.getMessage();
         return message.substring(message.lastIndexOf('.') + 1);
     }
