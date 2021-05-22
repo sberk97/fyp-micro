@@ -11,7 +11,9 @@ on:
       - 'zuul-server/**'
   pull_request:
     branches: [ master ]
-    paths: [advert-service, zuul-server]
+    paths:
+      - 'advert-service/**'
+      - 'zuul-server/**'
 
 jobs:
   build:
