@@ -62,7 +62,7 @@ class AuthenticationControllerITest {
         User user = new User();
         user.setUsername("admin1");
         user.setPassword("password");
-        user.setId(1);
+        user.setId(101);
         user.setRoles("ROLE_ADMIN");
 
         Claims claims = jwtTokenUtil.extractAllClaims(jwtToken);
