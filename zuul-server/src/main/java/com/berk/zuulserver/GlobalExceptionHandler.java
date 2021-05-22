@@ -59,7 +59,6 @@ public class GlobalExceptionHandler {
     @ResponseBody
     @ExceptionHandler(AuthenticationException.class)
     public String handleAuthenticationException(AuthenticationException ex) {
-        String message = ex.getMessage();
-        return message.substring(message.lastIndexOf('.') + 1);
+        return "Wrong username or password.";
     }
 }
