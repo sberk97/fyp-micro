@@ -9,18 +9,6 @@ services:
     restart: on-failure
     ports:
       - 8761:8761
-#  config:
-#    image: berk.com-config:0.0.1-SNAPSHOT
-#    volumes:
-#      - ./config-data:/var/config-data
-#    environment:
-#      - JAVA_OPTS=
-#        -DEUREKA_SERVER=http://discovery:8761/eureka
-#        -Dspring.cloud.config.server.native.searchLocations=/var/config-data
-#    depends_on:
-#      - discovery
-#    ports:
-#      - 8888:8888
   zuul-server:
     image: zuul-server
     container_name: zuul-server
@@ -34,12 +22,11 @@ services:
     depends_on:
       - eureka-server
       - db
-    #      - config
     ports:
       - 9092:9092
   advert-service:
     image: advert-service
-    container_name: advert-service
+#    container_name: advert-service
     build:
       context: ./advert-service
       dockerfile: Dockerfile
@@ -52,7 +39,6 @@ services:
       - eureka-server
       - zuul-server
       - db
-#      - config
     ports:
       - 9093
   front-end:
@@ -67,9 +53,8 @@ services:
       - zuul-server
       - advert-service
       - db
-      #      - config
     ports:
-      - 4200:80
+      - 8080:80
     links:
       - zuul-server
   db:
