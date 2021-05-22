@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "clean": "rimraf ./dist",
+    "build:prod": "ng build --prod",
+    "build:ci": "npm run clean && npm run build:prod"
   },
   "private": true,
   "dependencies": {
