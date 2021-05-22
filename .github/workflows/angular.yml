@@ -35,4 +35,4 @@ jobs:
       - name: npm ci and npm run build
         run: |
           npm ci
-          npm run build:ci
+          npm --prefix ~/front-end run build:ci
