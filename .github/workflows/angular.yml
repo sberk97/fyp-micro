@@ -3,10 +3,10 @@ name: Build Angular Front-End
 on:
   push:
     branches: [ master ]
-    paths: [front-end]
+#    paths: [front-end]
   pull_request:
     branches: [ master ]
-    paths: [front-end]
+#    paths: [front-end]
 
 jobs:
   build:
