@@ -3,8 +3,10 @@ name: Build Angular Front-End
 on:
   push:
     branches: [ master ]
+    paths: [front-end]
   pull_request:
     branches: [ master ]
+    paths: [front-end]
 
 jobs:
   build:
@@ -15,12 +17,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+        with:
+          path: front-end
       - name: Cache node modules
         uses: actions/cache@v2
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/front-end/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 

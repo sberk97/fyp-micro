@@ -6,8 +6,10 @@ name: Java CI with Maven
 on:
   push:
     branches: [ master ]
+    paths: [advert-service, zuul-server]
   pull_request:
     branches: [ master ]
+    paths: [advert-service, zuul-server]
 
 jobs:
   build:
