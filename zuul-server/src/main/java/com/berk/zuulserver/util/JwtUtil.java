@@ -4,7 +4,8 @@ import com.berk.zuulserver.model.MyUserDetails;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Value;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.function.Function;
 
-@Service
+@Service("jwtUtlService")
 public class JwtUtil {
 
-    @Value("${jwt.security.key}")
-    private String jwtKey;
+    private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -27,12 +27,12 @@ public class JwtUtil {
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
+        final var claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser().setSigningKey(jwtKey).parseClaimsJws(token).getBody();
+        return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {
@@ -51,10 +51,9 @@ public class JwtUtil {
     }
 
     private String createToken(Map<String, Object> claims, String subject) {
-
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15))
-                .signWith(SignatureAlgorithm.HS256, jwtKey).compact();
+                .signWith(key).compact();
     }
 
     public Boolean validateToken(String token, UserDetails userDetails) {
