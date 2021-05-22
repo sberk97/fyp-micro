@@ -3,10 +3,10 @@ name: Build Angular Front-End
 on:
   push:
     branches: [ master ]
-#    paths: [front-end]
+    paths: [front-end]
   pull_request:
     branches: [ master ]
-#    paths: [front-end]
+    paths: [front-end]
 
 jobs:
   build:
@@ -17,8 +17,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-#        with:
-#          path: front-end
       - name: Cache node modules
         uses: actions/cache@v2
         with:
@@ -35,6 +33,5 @@ jobs:
       - name: npm ci and npm run build
         run: |
           cd front-end
-          ls -l
           npm ci
           npm run build:ci
