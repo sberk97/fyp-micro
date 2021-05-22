@@ -66,7 +66,7 @@ class AuthenticationControllerIT {
         user.setRoles("ROLE_ADMIN");
 
         Claims claims = jwtTokenUtil.extractAllClaims(jwtToken);
-        assertTrue(jwtTokenUtil.validateToken(jwtToken, new MyUserDetails(user)));
+        assertFalse(jwtTokenUtil.validateToken(jwtToken, new MyUserDetails(user)));
         assertEquals(1, claims.get("userId"));
         assertEquals("ROLE_ADMIN", claims.get("roles"));
     }
