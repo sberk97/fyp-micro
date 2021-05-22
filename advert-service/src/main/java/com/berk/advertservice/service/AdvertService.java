@@ -5,11 +5,9 @@ import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.model.AdvertRepository;
 import com.berk.advertservice.model.ReturnUserDetails;
 import org.springframework.data.domain.*;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -18,7 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("advertService")
 public class AdvertService {
 
     final AdvertRepository advertRepository;
@@ -42,10 +40,6 @@ public class AdvertService {
         Pageable pageable = PageRequest.of(0, numberOfAdvertsRequested, Sort.Direction.DESC, "creationDate");
         return advertRepository.findByOrderByCreationDateDesc(pageable);
     }
-
-//    public Optional<List<Advert>> getAdverts(Specification<Advert> advertSpec) {
-//        return advertRepository.findAll(advertSpec);
-//    }
 
     public int addAdvert(AddAdvert advert) {
         ReturnUserDetails user = userDetailsService.getCurrentUser();
@@ -72,10 +66,6 @@ public class AdvertService {
         }
         return Optional.empty();
     }
-
-//    public List<Advert> getAll() {
-//        return advertRepository.findAll();
-//    }
 
     public Optional<List<Advert>> findAllByTitle(String title) {
         var caseInsensitiveExampleMatcher = ExampleMatcher.matchingAny().withIgnoreCase()

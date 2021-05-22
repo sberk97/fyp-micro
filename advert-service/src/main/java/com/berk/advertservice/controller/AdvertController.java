@@ -3,11 +3,7 @@ package com.berk.advertservice.controller;
 import com.berk.advertservice.model.AddAdvert;
 import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.service.AdvertService;
-import net.kaczmarzyk.spring.data.jpa.domain.Equal;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
-import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,16 +12,22 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.List;
 
 @RestController
 @Validated
 public class AdvertController {
+    @Value("${eureka.instance.instance-id}")
+    private String instance;
 
     @Resource(name = "advertService")
     private AdvertService advertService;
+
+    @GetMapping(value = "/instance")
+    public String getInstance() {
+        return "Hello from: " + instance;
+    }
 
     @GetMapping(value = "/adverts/{id}")
     public ResponseEntity<Advert> getAdvertById(@PathVariable int id) {
@@ -58,17 +60,6 @@ public class AdvertController {
     public ResponseEntity<Integer> editAdvert(@Valid @RequestBody AddAdvert advert, @PathVariable int id) {
         return ResponseEntity.of(advertService.editAdvert(advert, id));
     }
-
-//    @GetMapping(value = "/adverts")
-//    public ResponseEntity<List<Advert>> getAdverts(
-//            @And({
-//                    @Spec(path = "firstName", spec = Equal.class),
-//                    @Spec(path = "lastName", spec = Equal.class),
-//                    @Spec(path = "status", spec = Equal.class)
-//            }) Specification<Advert> advertSpec) {
-//
-//        return ResponseEntity.of(advertService.getAdverts(advertSpec));
-//    }
 
     @DeleteMapping(value = "/adverts/{id}")
     public ResponseEntity<?> deleteAdvert(@PathVariable int id) {
