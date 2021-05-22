@@ -122,22 +122,5 @@ class UserControllerITest {
         assertEquals("Password must be between 6 and 100 characters", response.getBody().get("password"));
     }
 
-    @Test
-    void shouldNotRegisterUserEmptyCredentials() throws Exception {
-        // given:
-        RegisterUser registerUser = new RegisterUser("", "");
 
-        // when:
-        RequestEntity<RegisterUser> request = RequestEntity
-                .post(createServerAddress("register"))
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(registerUser);
-
-        ResponseEntity<HashMap> response = restTemplate.exchange(request, HashMap.class);
-
-        // then:
-        assertTrue(response.getStatusCode().is4xxClientError());
-//        assertEquals("Username should not be empty.", response.getBody().get("username"));
-        assertEquals("Password should not be empty.", response.getBody().get("password"));
-    }
 }
