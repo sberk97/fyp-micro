@@ -1,4 +1,4 @@
-package com.berk.advertservice.controller;
+package com.berk.advertservice;
 
 import com.berk.advertservice.model.ReturnUserDetails;
 import org.springframework.http.HttpStatus;
