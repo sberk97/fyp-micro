@@ -54,7 +54,7 @@ services:
       - advert-service
       - db
     ports:
-      - 8080:80
+      - 9091:80
     links:
       - zuul-server
   db:
