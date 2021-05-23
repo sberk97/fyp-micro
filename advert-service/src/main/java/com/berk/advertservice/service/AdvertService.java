@@ -57,12 +57,15 @@ public class AdvertService {
     public Optional<Integer> editAdvert(AddAdvert advert, int id) {
         var advertOptional = advertRepository.findById(id);
         if (advertOptional.isPresent()) {
-            var updatedAdvert = advertOptional.get();
-            updatedAdvert.setTitle(advert.getTitle());
-            updatedAdvert.setDescription(advert.getDescription());
-            updatedAdvert.setPrice(advert.getPrice());
-            updatedAdvert.setContactDetails(advert.getContactDetails());
-            return Optional.of(advertRepository.saveAndFlush(updatedAdvert).getId());
+            ReturnUserDetails user = userDetailsService.getCurrentUser();
+            if (Arrays.asList(user.getRoles()).contains("ROLE_ADMIN") || user.getId() == advertOptional.get().getUserId()) {
+                var updatedAdvert = advertOptional.get();
+                updatedAdvert.setTitle(advert.getTitle());
+                updatedAdvert.setDescription(advert.getDescription());
+                updatedAdvert.setPrice(advert.getPrice());
+                updatedAdvert.setContactDetails(advert.getContactDetails());
+                return Optional.of(advertRepository.saveAndFlush(updatedAdvert).getId());
+            }
         }
         return Optional.empty();
     }

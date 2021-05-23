@@ -269,6 +269,115 @@ class AdvertControllerITest {
     }
 
     @Test
+    void shouldUpdateOwnAdvert() throws Exception {
+        // given:
+        int id = 102;
+        AddAdvert addAdvert = new AddAdvert(1500, "New advert title", "New advert description", "New advert contact details");
+        ReturnUserDetails returnUserDetails = new ReturnUserDetails(102, "user12", new String[]{"ROLE_USER"});
+
+        Mockito.doReturn(ResponseEntity.ok(returnUserDetails))
+                .when(otherApiHooks).handleGet();
+
+        // when:
+        RequestEntity<AddAdvert> request = RequestEntity
+                .put(createServerAddress("adverts/" + id))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(addAdvert);
+
+        ResponseEntity<Integer> response = restTemplate.exchange(request, Integer.class);
+
+        // then:
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+        Mockito.verify(otherApiHooks).handleGet();
+
+        // given:
+        assertEquals(id, response.getBody());
+
+        // when:
+        RequestEntity<Void> request2 = RequestEntity
+                .get(createServerAddress("adverts/" + id))
+                .build();
+
+        ResponseEntity<Advert> response2 = restTemplate.exchange(request2, Advert.class);
+        Advert advert = response2.getBody();
+
+        // then:
+        assertEquals(id, advert.getId());
+        assertEquals(102, advert.getUserId());
+        assertEquals("user12", advert.getUsername());
+        assertEquals(addAdvert.getPrice(), advert.getPrice());
+        assertEquals(addAdvert.getTitle(), advert.getTitle());
+        assertEquals(addAdvert.getDescription(), advert.getDescription());
+        assertEquals(addAdvert.getContactDetails(), advert.getContactDetails());
+    }
+
+    @Test
+    void shouldReturn4xxIfUpdatingSomeonesAdvert() throws Exception {
+        // given:
+        int id = 101;
+        AddAdvert addAdvert = new AddAdvert(1500, "New advert title", "New advert description", "New advert contact details");
+        ReturnUserDetails returnUserDetails = new ReturnUserDetails(102, "user12", new String[]{"ROLE_USER"});
+
+        Mockito.doReturn(ResponseEntity.ok(returnUserDetails))
+                .when(otherApiHooks).handleGet();
+
+        // when:
+        RequestEntity<AddAdvert> request = RequestEntity
+                .put(createServerAddress("adverts/" + id))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(addAdvert);
+
+        ResponseEntity<Integer> response = restTemplate.exchange(request, Integer.class);
+
+        // then:
+        assertTrue(response.getStatusCode().is4xxClientError());
+        Mockito.verify(otherApiHooks).handleGet();
+    }
+
+    @Test
+    void shouldUpdateAnyAdvertAsAdmin() throws Exception {
+        // given:
+        int id = 102;
+        AddAdvert addAdvert = new AddAdvert(1500, "New advert title", "New advert description", "New advert contact details");
+        ReturnUserDetails returnUserDetails = new ReturnUserDetails(101, "admin1", new String[]{"ROLE_ADMIN"});
+
+        Mockito.doReturn(ResponseEntity.ok(returnUserDetails))
+                .when(otherApiHooks).handleGet();
+
+        // when:
+        RequestEntity<AddAdvert> request = RequestEntity
+                .put(createServerAddress("adverts/" + id))
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(addAdvert);
+
+        ResponseEntity<Integer> response = restTemplate.exchange(request, Integer.class);
+
+        // then:
+        assertTrue(response.getStatusCode().is2xxSuccessful());
+        Mockito.verify(otherApiHooks).handleGet();
+
+        // given:
+        assertEquals(id, response.getBody());
+
+        // when:
+        RequestEntity<Void> request2 = RequestEntity
+                .get(createServerAddress("adverts/" + id))
+                .build();
+
+        ResponseEntity<Advert> response2 = restTemplate.exchange(request2, Advert.class);
+        Advert advert = response2.getBody();
+
+        // then:
+        assertEquals(id, advert.getId());
+        assertEquals(102, advert.getUserId());
+        assertEquals("user12", advert.getUsername());
+        assertEquals(addAdvert.getPrice(), advert.getPrice());
+        assertEquals(addAdvert.getTitle(), advert.getTitle());
+        assertEquals(addAdvert.getDescription(), advert.getDescription());
+        assertEquals(addAdvert.getContactDetails(), advert.getContactDetails());
+    }
+
+    @Test
     void shouldValidateAdvert() throws Exception {
         // given:
         AddAdvert addAdvert = new AddAdvert(-1, "a", "a", "a");
