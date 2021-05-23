@@ -29,10 +29,10 @@ import java.util.Arrays;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Resource(name = "userService")
-    private UserDetailsService userDetailsService;
     private final JwtAuthenticationEntryPoint unauthorizedHandler;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Resource(name = "userService")
+    private UserDetailsService userDetailsService;
 
     public SecurityConfiguration(JwtAuthenticationEntryPoint unauthorizedHandler, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.unauthorizedHandler = unauthorizedHandler;
@@ -78,12 +78,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/users/{id}", "/api/advert-service/instance", "/api/advert-service/adverts", "/api/advert-service/adverts-latest", "/api/advert-service/adverts/{id}", "/api/advert-service/adverts/users/{id}").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/register", "/api/authenticate").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/user").hasAnyRole("ADMIN", "USER")
+                .antMatchers(HttpMethod.GET, "/api/user").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.POST, "/api/advert-service/adverts").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.PUT, "/api/advert-service/adverts/{id}").hasAnyRole("ADMIN", "USER")
                 .antMatchers(HttpMethod.DELETE, "/api/advert-service/adverts/{id}").hasAnyRole("ADMIN", "USER")
-                .antMatchers(HttpMethod.GET,"/api/users").hasAnyRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE,"/api/users/{id}", "/api/advert-service/adverts/users/{id}").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/users").hasAnyRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/users/{id}", "/api/advert-service/adverts/users/{id}").hasAnyRole("ADMIN")
 //                .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler);

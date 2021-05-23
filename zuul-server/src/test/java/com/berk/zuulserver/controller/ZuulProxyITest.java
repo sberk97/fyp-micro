@@ -63,7 +63,7 @@ class ZuulProxyITest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"advert-service/adverts/1", "advert-service/adverts/users/1", "advert-service/adverts-latest", "advert-service/adverts" })
+    @ValueSource(strings = {"advert-service/adverts/1", "advert-service/adverts/users/1", "advert-service/adverts-latest", "advert-service/adverts"})
     void shouldRouteToGetAsUnauthorized(String path) throws Exception {
         // given:
         Mockito.doReturn(new ResponseEntity<String>("Route worked", HttpStatus.ACCEPTED))

@@ -239,7 +239,8 @@ class UserControllerITest {
                 .header("Authorization", "Bearer " + jwtToken)
                 .build();
 
-        ResponseEntity<List<ReturnUserDetails>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<ReturnUserDetails>>() {});
+        ResponseEntity<List<ReturnUserDetails>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<ReturnUserDetails>>() {
+        });
         List<ReturnUserDetails> userDetails = response.getBody();
 
         // then:
