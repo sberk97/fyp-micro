@@ -303,6 +303,24 @@ class UserControllerITest {
     }
 
     @Test
+    void shouldReturn4xxWhenDeletingHimself() throws Exception {
+        // given:
+        String jwtToken = getJwt("admin1", "password");
+
+        // when:
+        RequestEntity<Void> request = RequestEntity
+                .delete(createServerAddress("users/101"))
+                .header("Authorization", "Bearer " + jwtToken)
+                .build();
+
+        ResponseEntity<String> response = restTemplate.exchange(request, String.class);
+
+        // then:
+        assertTrue(response.getStatusCode().is4xxClientError());
+        assertEquals("You can't remove yourself", response.getBody());
+    }
+
+    @Test
     void shouldReturn4xxForUserAndNotLoggedInWhenDeletingUser() throws Exception {
         // given:
         String jwtToken = getJwt("user12", "password");
