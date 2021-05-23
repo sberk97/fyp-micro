@@ -26,7 +26,7 @@ public class Advert {
 
     @Column(name = "creation_date")
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonFormat(pattern="dd/MM/yyyy hh:mm")
+//    @JsonFormat(pattern="dd/MM/yyyy hh:mm")
     @JsonProperty("creation_date")
     private LocalDateTime creationDate;
 

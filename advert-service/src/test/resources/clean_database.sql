@@ -1,1 +1,1 @@
-TRUNCATE TABLE user;
+TRUNCATE TABLE advert;
