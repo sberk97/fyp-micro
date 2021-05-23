@@ -11,8 +11,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackageClasses = AdvertRepository.class)
 public class AdvertServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(AdvertServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(AdvertServiceApplication.class, args);
+    }
 
 }

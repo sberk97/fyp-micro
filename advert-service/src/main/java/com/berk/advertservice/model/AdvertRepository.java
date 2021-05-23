@@ -8,8 +8,11 @@ import java.util.Optional;
 
 public interface AdvertRepository extends JpaRepository<Advert, Integer> {
     Optional<Advert> findById(int id);
+
     Optional<List<Advert>> findAllByUserId(int id);
+
     Optional<List<Advert>> findByOrderByCreationDateDesc(Pageable pageable);
+
     void deleteByUserId(int id);
 }
 
