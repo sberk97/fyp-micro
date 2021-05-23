@@ -111,7 +111,8 @@ class AdvertControllerITest {
                 .get(createServerAddress("adverts/users/" + id))
                 .build();
 
-        ResponseEntity<List<Advert>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<Advert>>() {});
+        ResponseEntity<List<Advert>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<Advert>>() {
+        });
         Advert advert = response.getBody().get(0);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -168,7 +169,8 @@ class AdvertControllerITest {
                 .get(createServerAddress("adverts-latest/?last=" + howManyAdverts))
                 .build();
 
-        ResponseEntity<List<Advert>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<Advert>>() {});
+        ResponseEntity<List<Advert>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<Advert>>() {
+        });
 
         // then:
         assertEquals(102, response.getBody().get(0).getId());
@@ -186,7 +188,8 @@ class AdvertControllerITest {
                 .get(createServerAddress("adverts/?title=" + title))
                 .build();
 
-        ResponseEntity<List<Advert>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<Advert>>() {});
+        ResponseEntity<List<Advert>> response = restTemplate.exchange(request, new ParameterizedTypeReference<List<Advert>>() {
+        });
 
         // then:
         assertEquals(101, response.getBody().get(0).getId());
@@ -224,7 +227,7 @@ class AdvertControllerITest {
 
         // then:
         assertTrue(response.getStatusCode().is4xxClientError());
-        assertEquals("Title can be up to 60 characters",response.getBody().get("title"));
+        assertEquals("Title can be up to 60 characters", response.getBody().get("title"));
     }
 
     @Test

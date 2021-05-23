@@ -5,9 +5,6 @@ import com.berk.advertservice.model.Advert;
 import com.berk.advertservice.model.AdvertRepository;
 import com.berk.advertservice.model.ReturnUserDetails;
 import org.springframework.data.domain.*;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
