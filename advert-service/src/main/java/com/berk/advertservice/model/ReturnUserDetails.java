@@ -5,6 +5,12 @@ public class ReturnUserDetails {
     private String username;
     private String[] roles;
 
+    public ReturnUserDetails(int id, String username, String[] roles) {
+        this.id = id;
+        this.username = username;
+        this.roles = roles;
+    }
+
     public int getId() {
         return id;
     }
